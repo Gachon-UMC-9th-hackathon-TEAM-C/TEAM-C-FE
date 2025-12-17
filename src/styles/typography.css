@@ -1,0 +1,72 @@
+/* typography.css */
+@reference utilities;
+
+@layer base {
+  :root {
+    --text-regular-22: 22px;
+
+    --text-medium-15: 15px;
+    --text-medium-18: 18px;
+    --text-medium-20: 20px;
+    --text-medium-24: 24px;
+
+    --text-semibold-20: 20px;
+    --text-semibold-24: 24px;
+    --text-semibold-28: 28px;
+    --text-semibold-32: 32px;
+
+    --text-bold-28: 28px;
+    --text-bold-32: 32px;
+    --text-bold-40: 40px;
+  }
+}
+
+@layer components {
+  .text-regular-22 {
+    @apply text-[var(--text-regular-22)] font-normal;
+  }
+
+  .text-medium-15 {
+    @apply text-[var(--text-medium-15)] font-medium;
+  }
+
+  .text-medium-18 {
+    @apply text-[var(--text-medium-18)] font-medium;
+  }
+
+  .text-medium-20 {
+    @apply text-[var(--text-medium-20)] font-medium;
+  }
+
+  .text-medium-24 {
+    @apply text-[var(--text-medium-24)] font-medium;
+  }
+
+  .text-semibold-20 {
+    @apply text-[var(--text-semibold-20)] font-semibold;
+  }
+
+  .text-semibold-24 {
+    @apply text-[var(--text-semibold-24)] font-semibold;
+  }
+
+  .text-semibold-28 {
+    @apply text-[var(--text-semibold-28)] font-semibold;
+  }
+
+  .text-semibold-32 {
+    @apply text-[var(--text-semibold-32)] font-semibold;
+  }
+
+  .text-bold-28 {
+    @apply text-[var(--text-bold-28)] font-bold;
+  }
+
+  .text-bold-32 {
+    @apply text-[var(--text-bold-32)] font-bold;
+  }
+
+  .text-bold-40 {
+    @apply text-[var(--text-bold-40)] font-bold;
+  }
+}

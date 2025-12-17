@@ -4,7 +4,7 @@ import Header from "../common/Header"
 const HomeHeader = () => {
     return (
         <Header>
-            Home Header
+            <p className="text-gray-1 text-medium-24">Home Header</p>
         </Header>
     );
 }

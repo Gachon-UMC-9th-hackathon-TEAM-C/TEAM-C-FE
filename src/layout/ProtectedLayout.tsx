@@ -1,6 +1,6 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom"
 import Header from "../component/common/Header";
-import BottomTab from "../component/common/BottomTab";
+import BottomTab from "../component/common/Sidebar";
 
 const ProtectedLayout = () => {
     const location = useLocation();
@@ -14,13 +14,12 @@ const ProtectedLayout = () => {
     );
     
     return (
-        <div className="flex flex-col min-h-screen w-screen bg-violet-100">
-
+        <div className="flex min-h-0 h-screen w-screen bg-violet-100 font-[Pretendard]">
+            <BottomTab />
             {/* 본문 영역 */}
             <div className="flex flex-1 w-full">
                 <Outlet />
             </div>
-            <BottomTab />
         </div>
     )
 }

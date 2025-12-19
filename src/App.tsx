@@ -4,12 +4,15 @@ import RootLayout from './layout/RootLayout;';
 import NotFound from './pages/NotFound';
 import ProtectedLayout from './layout/ProtectedLayout';
 import LoginPage from './pages/LoginPage';
-import Home from './pages/Home';
 import Review from './pages/Review';
 import Library from './pages/Library';
 import Profile from './pages/Profile';
 import QuizPage from './pages/quizPage';
-
+import LearningCompletedPage from './pages/LearningCompletedPage';
+import CardLearningPage from './pages/CardLearningPage';
+import OnboardingPage from './pages/OnboardingPage';
+import ReviewCardPage from './pages/ReviewCardPage';
+import HomePage from './pages/Home/HomePage';
 const publicRoutes: RouteObject[] = [
   {
     path: '/',
@@ -33,7 +36,8 @@ const protectedRoutes: RouteObject[] = [
     children: [
       {
         path: "home",
-        element: <Home />,
+        element: <HomePage />,
+      
       },
       {
         path: "review",
@@ -49,7 +53,23 @@ const protectedRoutes: RouteObject[] = [
       },
       {
         path: "Quiz",
-        element: <QuizPage />,
+        element: <QuizPage />
+      },
+      {
+        path: "learningCompleted",
+        element: <LearningCompletedPage/>
+      },
+      {
+        path: "cardlearning",
+        element: <CardLearningPage />,
+      },
+      {
+        path:"Onboarding",
+        element: <OnboardingPage />,
+      },
+      {
+        path: "reviewcard",
+        element: <ReviewCardPage />,
       },
     ],
   },

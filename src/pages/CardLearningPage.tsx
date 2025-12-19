@@ -29,21 +29,22 @@ const CardLearningPage = () => {
       
       {/* 1. 헤더 */}
       <Header>
-        <div className="flex flex-col w-full max-w-2xl px-10 gap-3 mx-auto pb-10">
+        <div className="relative flex flex-col w-full max-w-2xl px-10 pt-3 pb-5 gap-3 mx-auto">
+          <button aria-label="닫기" className="absolute top-2 left-0 h-8 w-8 place-items-center rounded-full hover:bg-black/5">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path d="M17 17L1 1M17 1L1 17" stroke="#72787F" strokeWidth="2" strokeLinecap="round"/>
+            </svg>
+          </button>
           <div className="flex items-center justify-between w-full">
-            <div className="flex items-center gap-1">
-              <button aria-label="닫기" className="grid h-8 w-8 place-items-center rounded-full hover:bg-black/5">
-                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                  <path d="M17 17L1 1M17 1L1 17" stroke="#72787F" strokeWidth="2" strokeLinecap="round"/>
-                </svg>
-              </button>
-              <div className="text-lg font-medium text-primary">{index}/{total}</div>
+            <div className="flex items-center gap-3">
+              
+              <div className="h-6 text-medium-18 text-primary-6">{index}/{total}</div>
             </div>
-            <div className="text-lg font-bold text-primary">{progress}%</div>
+            <div className="h-5.5 text-medium-18 text-primary-6">{progress}%</div>
           </div>
-          <div className="w-full bg-blue-100 h-2.5 rounded-full overflow-hidden">
+          <div className="w-full bg-primary-3 h-3 rounded-full overflow-hidden">
             <div 
-              className="bg-blue-500 h-full rounded-full transition-all duration-300" 
+              className="bg-secondary h-full rounded-full transition-all duration-300" 
               style={{ width: `${progress}%` }} 
             />
           </div>
@@ -51,7 +52,7 @@ const CardLearningPage = () => {
       </Header>
 
       {/* 2. 메인 컨텐츠 */}
-      <main className="w-full max-w-2xl flex flex-col gap-8 pb-40">
+      <main className="w-full max-w-2xl flex flex-col pb-7">
         
         {/* 카드 섹션 */}
         <div className="relative px-10 flex justify-center w-full mt-8">
@@ -65,21 +66,19 @@ const CardLearningPage = () => {
         </div>
 
         {/* ✅ 예문보기 섹션 (수정됨) */}
-        <div className="px-10 flex justify-center w-full min-h-[60px]">
+        <div className="px-10 mt-8 flex justify-center w-full min-h-[45px]">
           {!showExample ? (
             // [상태 1] 버튼이 보일 때
             <button 
               onClick={() => setShowExample(true)} 
               className="flex items-center gap-2 py-2 px-4 rounded-full hover:bg-blue-50 transition-colors"
             >
-              <span className="text-blue-600 font-bold">▶</span>
-              <span className="text-sm font-bold text-blue-600">예문보기</span>
+              <span className="text-primary-2 text-medium-18">▶ 예문보기</span>
             </button>
           ) : (
             // [상태 2] 버튼 누른 후 -> 예문 박스 등장
-            <div className="w-full rounded-xl bg-[#F0F6FF] border border-[#DCE6FF] py-4 px-6 text-center animate-fadeIn">
-              <p className="text-[#5474FF] font-medium text-sm break-keep">
-                <span className="font-bold mr-2">예문</span>
+            <div className="w-full rounded-xl bg-primary-5 border border-primary-4 py-4 px-6 text-center animate-fadeIn">
+              <p className="flex text-gray-3 text-medium-15 break-keep">
                 {currentCard.example}
               </p>
             </div>
@@ -87,15 +86,15 @@ const CardLearningPage = () => {
         </div>
 
         {/* 연관용어 섹션 */}
-        <div className="w-full px-10 mt-2">
-          <div className="text-sm font-bold text-gray-500 mb-4 text-left">
+        <div className="w-full px-10 mt-3">
+          <div className="text-medium-15 text-gray-3 mb-2 text-left">
             연관용어
           </div>
           <div className="flex flex-wrap gap-2">
             {related.map((word, i) => (
               <button
                 key={i}
-                className="rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-gray-600 shadow-sm border border-gray-6 hover:bg-gray-50"
+                className="rounded-full bg-white px-5 py-1 text-medium-15 text-gray-2 border border-gray-7 hover:bg-gray-50"
               >
                 {word}
               </button>
@@ -105,21 +104,24 @@ const CardLearningPage = () => {
       </main>
 
       {/* 3. 하단 고정 푸터 */}
-      <footer className="fixed bottom-0 left-0 w-full flex justify-center bg-white border-t-2 border-gray-100 py-6 z-[999]">
-        <div className="w-full max-w-2xl px-10 flex gap-4">
+      <footer className="left-0 w-full flex justify-center bg-white border-t-2 border-gray-100 py-6 z-[999]">
+        {/* gap-4 -> gap-10 : 버튼 사이 간격을 넓힘
+            (gap-6, gap-8, gap-12 등으로 조절 가능)
+        */}
+        <div className="w-full max-w-xl flex justify-between flex ">
           <button
-            style={{ backgroundColor: "#FDF2D7", color: "#EEBC31" }}
-            className="flex-1 h-14 rounded-[56px] font-extrabold text-lg transition-transform active:scale-95 hover:brightness-95"
+            onClick={handleNext}
+            className="w-45 h-14 rounded-2xl bg-secondary-5 text-secondary-6 text-medium-18 shadow-lg transition-transform active:scale-95 hover:brightness-95"
           >
             모르겠어요
           </button>
 
           <button
-            onClick={handleNext} // ✅ 다음 버튼 누르면 예문도 닫히도록 수정
-            style={{ backgroundColor: "#5474FF", color: "#FFFFFF" }}
-            className="flex-1 h-14 rounded-2xl font-extrabold text-lg shadow-lg shadow-blue-100 transition-transform active:scale-95 hover:brightness-95"
+            onClick={index === total ? () => console.log("학습 완료!") : handleNext}
+            className="w-45 h-14 rounded-2xl bg-primary text-gray-10 text-medium-18 shadow-lg transition-transform active:scale-95 hover:brightness-95"
           >
-            다음
+            {/* index가 total(5)이면 '학습 완료', 아니면 '다음' */}
+            {index === total ? "학습 완료" : "다음"}
           </button>
         </div>
       </footer>

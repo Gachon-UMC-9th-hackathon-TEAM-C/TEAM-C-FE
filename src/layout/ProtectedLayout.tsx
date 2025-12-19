@@ -5,7 +5,7 @@ const ProtectedLayout = () => {
     const location = useLocation();
 
     // 사이드바를 숨길 경로 목록
-    const hideSidebarPaths = ['/cardlearning', '/Onboarding', '/reviewcard',];
+    const hideSidebarPaths = ['/cardlearning', '/Onboarding', '/reviewcard', '/learningCompleted'];
 
     // 현재 경로가 목록에 포함되어 있는지 여부
     const shouldHideSidebar = hideSidebarPaths.some((path) =>

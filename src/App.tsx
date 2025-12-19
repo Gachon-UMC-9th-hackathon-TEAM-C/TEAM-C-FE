@@ -7,6 +7,7 @@ import LoginPage from './pages/LoginPage';
 import Review from './pages/Review';
 import Library from './pages/Library';
 import Profile from './pages/Profile';
+import QuizPage from './pages/quizPage';
 import LearningCompletedPage from './pages/LearningCompletedPage';
 import CardLearningPage from './pages/CardLearningPage';
 import OnboardingPage from './pages/OnboardingPage';
@@ -49,6 +50,10 @@ const protectedRoutes: RouteObject[] = [
       {
         path: "profile",
         element: <Profile />,
+      },
+      {
+        path: "Quiz",
+        element: <QuizPage />
       },
       {
         path: "learningCompleted",

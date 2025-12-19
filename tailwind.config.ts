@@ -5,6 +5,6 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   plugins: [
     react(),
-    tailwindcss(), // 🔥 이 줄이 핵심
+    tailwindcss(), // 🔥 이 줄 필수
   ],
 });

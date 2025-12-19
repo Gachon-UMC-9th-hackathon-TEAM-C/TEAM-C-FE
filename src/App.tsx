@@ -1,13 +1,20 @@
-import { createBrowserRouter, RouteObject, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, Navigate, RouteObject, RouterProvider } from 'react-router-dom';
 import './App.css'
 import RootLayout from './layout/RootLayout;';
 import NotFound from './pages/NotFound';
 import ProtectedLayout from './layout/ProtectedLayout';
 import LoginPage from './pages/LoginPage';
-import Home from './pages/Home';
 import Review from './pages/Review';
-import Library from './pages/Library';
 import Profile from './pages/Profile';
+import QuizPage from './pages/QuizPage';
+import LearningCompletedPage from './pages/LearningCompletedPage';
+import CardLearningPage from './pages/CardLearningPage';
+import OnboardingPage from './pages/OnboardingPage';
+import ReviewCardPage from './pages/ReviewCardPage';
+import HomePage from './pages/Home/HomePage';
+import TodayLearnPage from './pages/TodayLearnPage';
+import LibraryPage from './pages/Library/LibraryPage';
+import ReviewCompletedPage from './pages/reviewCompletedPage';
 
 const publicRoutes: RouteObject[] = [
   {
@@ -17,6 +24,9 @@ const publicRoutes: RouteObject[] = [
     children: [
       {
         index: true,
+        element: <Navigate to="/login" replace />,
+      },
+      {
         path: 'login',
         element: <LoginPage />,
       },
@@ -32,7 +42,8 @@ const protectedRoutes: RouteObject[] = [
     children: [
       {
         path: "home",
-        element: <Home />,
+        element: <HomePage />,
+      
       },
       {
         path: "review",
@@ -40,12 +51,40 @@ const protectedRoutes: RouteObject[] = [
       },
       {
         path: "library",
-        element: <Library />,
+        element: <LibraryPage />,
       },
       {
         path: "profile",
         element: <Profile />,
       },
+      {
+        path: "Quiz",
+        element: <QuizPage />
+      },
+      {
+        path: "learningCompleted",
+        element: <LearningCompletedPage/>
+      },
+      {
+        path: "cardlearning",
+        element: <CardLearningPage />,
+      },
+      {
+        path:"onboarding",
+        element: <OnboardingPage />,
+      },
+      {
+        path: "reviewcard",
+        element: <ReviewCardPage />,
+      },
+      {
+        path: "todaylearn",
+        element: <TodayLearnPage />,
+      },
+      {
+        path: "reviewCompletedPage",
+        element: <ReviewCompletedPage />
+      }
     ],
   },
 ];

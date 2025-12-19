@@ -11,6 +11,7 @@ import Profile from './pages/Profile';
 import CardLearningPage from './pages/CardLearningPage';
 
 import OnboardingPage from './pages/OnboardingPage';
+import ReviewCardPage from './pages/ReviewCardPage';
 const publicRoutes: RouteObject[] = [
   {
     path: '/',
@@ -55,6 +56,10 @@ const protectedRoutes: RouteObject[] = [
       {
         path:"Onboarding",
         element: <OnboardingPage />,
+      },
+      {
+        path: "reviewcard",
+        element: <ReviewCardPage />,
       },
     ],
   },

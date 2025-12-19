@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouteObject, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, Navigate, RouteObject, RouterProvider } from 'react-router-dom';
 import './App.css'
 import RootLayout from './layout/RootLayout;';
 import NotFound from './pages/NotFound';
@@ -14,6 +14,7 @@ import ReviewCardPage from './pages/ReviewCardPage';
 import HomePage from './pages/Home/HomePage';
 import TodayLearnPage from './pages/TodayLearnPage';
 import LibraryPage from './pages/Library/LibraryPage';
+
 const publicRoutes: RouteObject[] = [
   {
     path: '/',
@@ -22,6 +23,9 @@ const publicRoutes: RouteObject[] = [
     children: [
       {
         index: true,
+        element: <Navigate to="/login" replace />,
+      },
+      {
         path: 'login',
         element: <LoginPage />,
       },
@@ -65,7 +69,7 @@ const protectedRoutes: RouteObject[] = [
         element: <CardLearningPage />,
       },
       {
-        path:"Onboarding",
+        path:"onboarding",
         element: <OnboardingPage />,
       },
       {

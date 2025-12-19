@@ -10,7 +10,7 @@ const Review = () => {
   ];
 
   return (
-    <div className="flex flex-col w-full items-center justify-center min-h-screen bg-gray-50 p-4 font-sans">
+    <div className="flex flex-col w-full items-center justify-center min-h-screen bg-gray-50 p-4">
       <div className="w-full max-w-xl space-y-6">
         
         {/* 상단 메인 카드 */}

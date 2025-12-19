@@ -47,7 +47,7 @@ const ReviewCardPage = () => {
       </Header>
 
       {/* 2. 메인 컨텐츠 */}
-      <main className="w-full max-w-2xl flex flex-col pb-7 m-19">
+      <main className="w-full h-full max-w-2xl flex flex-col pb-7 m-19">
         
         {/* 카드 섹션 */}
         <div className="relative px-10 flex justify-center w-full mt-8">

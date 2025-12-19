@@ -3,11 +3,17 @@ import STARICON from "../assets/STARICON.svg"
 import ROTATEARROW from "../assets/ROTATEARROW.svg"
 import WordCard from "../component/LearningCompleted/WordCard"
 import Button from "../component/common/Button"
+import { useNavigate } from "react-router-dom"
 
 const LearningCompletedPage = () => {
+    const navigate = useNavigate()
 
     const words = ["인플레이션", "기준금리","GDP","양적완화","복리"]
     const review = ["환율", "디플레이션"]
+
+    const handleMoveToHome = () => {
+        navigate("/home")
+    }
 
     return (
         <div className="flex w-full h-screen justify-center items-center bg-linear-to-t from-[#0F52B0] to-[#1575FB] overflow-y-auto">
@@ -64,6 +70,7 @@ const LearningCompletedPage = () => {
                 </div>
                 <button
                     className="w-full bg-white text-semibold-28 text-primary py-5 rounded-2xl mt-10 cursor-pointer"
+                    onClick={handleMoveToHome}
                 >
                     홈으로 돌아가기
                 </button>

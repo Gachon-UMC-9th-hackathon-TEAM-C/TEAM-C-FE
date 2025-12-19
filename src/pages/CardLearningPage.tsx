@@ -1,12 +1,14 @@
 import { useMemo, useState } from "react";
 import Header from "../component/common/Header";
 import FlipCard from "../component/FlipCard";
+import { useNavigate } from "react-router-dom";
 
 const CardLearningPage = () => {
   const [index, setIndex] = useState(1);
   const [showExample, setShowExample] = useState(false); // ✅ 예문 보기 상태 추가
   const total = 5;
   const progress = Math.round((index / total) * 100);
+  const navigate = useNavigate();
 
   const related = useMemo(() => ["연관용어", "연관용어", "연관용어"], []);
 
@@ -23,6 +25,10 @@ const CardLearningPage = () => {
     setShowExample(false); // 다음 카드로 가면 예문 다시 닫기
     setIndex((v) => Math.min(total, v + 1));
   };
+
+  const handleStudyCompleted = () => {
+    navigate("/Quiz")
+  }
 
   return (
     <div className="w-full min-h-screen bg-gray-50 flex flex-col items-center">
@@ -52,7 +58,7 @@ const CardLearningPage = () => {
       </Header>
 
       {/* 2. 메인 컨텐츠 */}
-      <main className="w-full max-w-2xl flex flex-col pb-7">
+      <main className="w-full h-full max-w-2xl flex flex-col pb-7">
         
         {/* 카드 섹션 */}
         <div className="relative px-10 flex justify-center w-full mt-8">
@@ -117,7 +123,7 @@ const CardLearningPage = () => {
           </button>
 
           <button
-            onClick={index === total ? () => console.log("학습 완료!") : handleNext}
+            onClick={index === total ? handleStudyCompleted : handleNext}
             className="w-45 h-14 rounded-2xl bg-primary text-gray-10 text-medium-18 shadow-lg transition-transform active:scale-95 hover:brightness-95"
           >
             {/* index가 total(5)이면 '학습 완료', 아니면 '다음' */}

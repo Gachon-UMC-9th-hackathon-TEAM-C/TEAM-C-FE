@@ -14,6 +14,7 @@ import ReviewCardPage from './pages/ReviewCardPage';
 import HomePage from './pages/Home/HomePage';
 import TodayLearnPage from './pages/TodayLearnPage';
 import LibraryPage from './pages/Library/LibraryPage';
+import ReviewCompletedPage from './pages/reviewCompletedPage';
 
 const publicRoutes: RouteObject[] = [
   {
@@ -80,6 +81,10 @@ const protectedRoutes: RouteObject[] = [
         path: "todaylearn",
         element: <TodayLearnPage />,
       },
+      {
+        path: "reviewCompletedPage",
+        element: <ReviewCompletedPage />
+      }
     ],
   },
 ];

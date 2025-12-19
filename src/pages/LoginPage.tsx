@@ -1,9 +1,16 @@
 import ECONFLIPLOGO from "../assets/ECONFLIPLogo.svg";
 import NAVERLOGO from "../assets/NaverLogo.svg";
 import KAKAOLOGO from "../assets/KakaoLogo.svg";
+import { useNavigate } from "react-router-dom";
 
 
 const LoginPage = () => {
+    const navigate = useNavigate();
+
+    const handleLogin = () => {
+        navigate("/onboarding", { replace: true})
+    }
+
     return (
         <div className="flex w-full h-screen justify-center items-center bg-linear-to-t from-[#0F52B0] to-[#1575FB] overflow-y-auto">
             <div className="flex flex-col w-113 min-h- rounded-4xl bg-white px-10 py-17 my-10">
@@ -24,10 +31,16 @@ const LoginPage = () => {
                     <div className="w-full h-1 border-b border-gray-400"></div>
                     <span className="text-medium-15 text-gray-4">SNS로 간편하게 시작하기</span>
                     <div className="flex gap-5">
-                        <button className="flex justify-center items-center cursor-pointer">
+                        <button
+                            className="flex justify-center items-center cursor-pointer"
+                            onClick={handleLogin}
+                        >
                             <img src={NAVERLOGO} alt="Naver Logo" className="mr-2" />
                         </button>
-                        <button className="flex justify-center items-center cursor-pointer">
+                        <button
+                            className="flex justify-center items-center cursor-pointer"
+                            onClick={handleLogin}
+                        >
                             <img src={KAKAOLOGO} alt="Kakao Logo" className="mr-2" />
                         </button>
                     </div>

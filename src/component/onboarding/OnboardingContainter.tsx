@@ -5,13 +5,19 @@ import OnboardingSlide from "./OnboardingSlide";
 import ProgressDots from "./ProgressDots";
 import DailyCardSelector from "./DailyCardSelector";
 import PrimaryButton from "../common/PrimaryButton";
+import { useNavigate } from "react-router-dom";
 
 export default function OnboardingContainer() {
   const { currentIndex, setIndex } = useOnboardingStore();
+  const navigate = useNavigate();
 
   const handleNext = useThrottle(() => {
     if (currentIndex < ONBOARDING_SLIDE_LIST.length - 1) {
       setIndex(currentIndex + 1);
+    }
+
+    if (currentIndex === 2) {
+      navigate("/home")
     }
   });
 

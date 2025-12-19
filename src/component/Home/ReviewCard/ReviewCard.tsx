@@ -1,7 +1,13 @@
+import { useNavigate } from "react-router-dom";
 import { useUserStore } from "../../../store/useUserStore";
 
 const ReviewCard = () => {
   const { reviewCount } = useUserStore();
+  const navigate = useNavigate();
+
+  const handleReviewStart = () => {
+    navigate("/review")
+  }
 
   return (
     <div className="w-full bg-white rounded-[22px] px-9 py-5 mt-5 shadow-xl
@@ -21,13 +27,13 @@ const ReviewCard = () => {
 
       {/* BUTTON */}
       <button
+        onClick={handleReviewStart}
         className="
           px-2 py-3
           bg-white
           text-[#1575FB]
           rounded-2xl
-     
-         
+          cursor-pointer
           font-medium
           text-[15px]
         "

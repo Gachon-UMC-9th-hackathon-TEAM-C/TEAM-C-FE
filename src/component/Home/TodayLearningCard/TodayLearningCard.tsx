@@ -1,9 +1,15 @@
+import { useNavigate } from "react-router-dom";
 import { useUserStore } from "../../../store/useUserStore";
 import ProgressStatus from "../../common/ProgressStatus";
 
 const TodayLearningCard = () => {
   const { progress, getStatus } = useUserStore();
   const status = getStatus();
+  const navigate = useNavigate();
+
+  const handleStudyStart = () => {
+    navigate("/todaylearn")
+  }
 
   return (
     <div
@@ -53,13 +59,14 @@ const TodayLearningCard = () => {
 
       {/* 버튼 */}
       <button
-        onClick={() => console.log("학습 시작")}
+        onClick={handleStudyStart}
         className="
            w-105 mx-auto mt-6 block 
             py-3.5
             rounded-full 
             bg-white text-blue-500 text-lg font-bold
             shadow-md hover:bg-blue-50 transition
+            cursor-pointer
           "
       >
         학습 시작

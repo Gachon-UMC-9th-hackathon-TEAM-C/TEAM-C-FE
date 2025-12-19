@@ -1,10 +1,11 @@
 import { useState } from "react";
 import Header from "../component/common/Header";
 import FlipCard from "../component/FlipCard";
+import { useNavigate } from "react-router-dom";
 
 const ReviewCardPage = () => {
+  const navigate = useNavigate()
   const [index, setIndex] = useState(1); // 시작은 1
-  // ▼ 여기를 5에서 2로 변경했습니다.
   const total = 2; 
   
   // 계산 로직: (1 / 2) * 100 = 50% 가 됨
@@ -22,6 +23,10 @@ const ReviewCardPage = () => {
   const handleNext = () => {
     setIndex((v) => Math.min(total, v + 1));
   };
+
+  const handleReviewCompleted = () => {
+    navigate("/reviewCompletedPage")
+  }
 
   return (
     <div className="w-full min-h-screen bg-gray-50 flex flex-col items-center">
@@ -68,7 +73,7 @@ const ReviewCardPage = () => {
         */}
         <div className="w-full max-w-xl flex justify-end flex ">
           <button
-            onClick={index === total ? () => console.log("복습 완료!") : handleNext}
+            onClick={index === total ? handleReviewCompleted : handleNext}
             className="w-45 h-14 rounded-2xl bg-primary text-gray-10 text-medium-18 shadow-lg transition-transform active:scale-95 hover:brightness-95"
           >
             {/* index가 total(5)이면 '학습 완료', 아니면 '다음' */}

@@ -59,9 +59,9 @@ const Review = () => {
         {/* 하단 버튼 섹션 */}
         <div className="pt-4 space-y-4">
           <button
-          onClick={() => navigate("/reviewcard")}
-          className="w-full py-4 text-medium-15 font-bold text-gray-1 py-4 rounded-2xl shadow-md bg-gradient-to-br from-[var(--color-secondary)] to-[var(--color-secondary-6)] transition-all duration-150 ease-out active:scale-[0.97] active:shadow-sm">
-            복습 시작
+            onClick={() => navigate("/reviewcard")}
+            className="w-full py-4 text-medium-15 font-bold text-gray-1 py-4 rounded-2xl shadow-md bg-gradient-to-br from-[var(--color-secondary)] to-[var(--color-secondary-6)] transition-all duration-150 ease-out active:scale-[0.97] active:shadow-sm cursor-pointer">
+              복습 시작
           </button>
           
           <div className="flex items-center justify-center gap-1.5 text-gray-500 text-sm">

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Question } from '../types/quiz';
+import { useNavigate } from 'react-router-dom';
 
 export const useQuiz = (questions: Question[]) => {
   const [currentIndex, setCurrentIndex] = useState(0); // 현재 문제 번호
@@ -9,14 +10,17 @@ export const useQuiz = (questions: Question[]) => {
   const [isRight, setIsRight] = useState<boolean | null>(null); // 정답 여부
   const currentQuiz = questions[currentIndex];
   const progress = ((currentIndex + 1) / questions.length) * 100;
+  const navigate = useNavigate()
 
   const handleSelect = (idx: number) => {
     if (isAnswered) return;
     setSelectedIdx(idx);
 
   }
-    
 
+  const handleMoveLearningCompleted = () => {
+    navigate("/learningCompleted")
+  }
 
   const handleNext = () => {
     if (selectedIdx === null) return;
@@ -40,7 +44,7 @@ export const useQuiz = (questions: Question[]) => {
       setIsAnswered(false);
       setIsRight(null);
     } else {
-      alert("퀴즈 종료!");
+      handleMoveLearningCompleted()
     }
   };
 

@@ -4,7 +4,7 @@ const ReviewCard = () => {
   const { reviewCount } = useUserStore();
 
   return (
-    <div className="w-full h-full bg-white rounded-[22px] px-9 py-5 mt-5 shadow-xl
+    <div className="w-full bg-white rounded-[22px] px-9 py-5 mt-5 shadow-xl
         shadow-blue-100 flex justify-between items-center">
 
       {/* LEFT */}

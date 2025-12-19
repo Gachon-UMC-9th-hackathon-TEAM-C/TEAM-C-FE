@@ -5,7 +5,6 @@ import NotFound from './pages/NotFound';
 import ProtectedLayout from './layout/ProtectedLayout';
 import LoginPage from './pages/LoginPage';
 import Review from './pages/Review';
-import Library from './pages/Library';
 import Profile from './pages/Profile';
 import QuizPage from './pages/quizPage';
 import LearningCompletedPage from './pages/LearningCompletedPage';
@@ -13,6 +12,7 @@ import CardLearningPage from './pages/CardLearningPage';
 import OnboardingPage from './pages/OnboardingPage';
 import ReviewCardPage from './pages/ReviewCardPage';
 import HomePage from './pages/Home/HomePage';
+import LibraryPage from './pages/Library/LibraryPage';
 const publicRoutes: RouteObject[] = [
   {
     path: '/',
@@ -45,7 +45,7 @@ const protectedRoutes: RouteObject[] = [
       },
       {
         path: "library",
-        element: <Library />,
+        element: <LibraryPage />,
       },
       {
         path: "profile",

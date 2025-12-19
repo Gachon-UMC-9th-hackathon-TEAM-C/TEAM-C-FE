@@ -1,5 +1,115 @@
+import MyBadge, { Badge } from "../component/MyBadge";
+import MyState from "../component/MyState";
+import bookmarkLogo from "../assets/bookmarkLogo.svg";
+import profileLogo from "../assets/profileLogo.svg";
+import crownLogo from "../assets/crownLogo.svg";
+
 const Profile = () => {
-    return <div>Profile Page</div>;
-}
+  // 데이터 정의 (실제로는 API에서 받아오거나 상태로 관리)
+  const userStats = {
+    streak: 7,
+    level: 3,
+    terms: 5,
+    xp: 450,
+  };
+
+  const badges: Badge[] = [
+    { id: 1, type: 'flame', name: "일주일 연속", active: true },
+    { id: 2, type: 'trophy', name: "첫완료", active: false },
+    { id: 3, type: 'book', name: "10개 학습", active: false },
+    { id: 4, type: 'award', name: "완벽한 점수", active: false },
+  ];
+
+  const settings = ["학습목표 설정", "알림설정", "데이터 초기화"];
+
+  return (
+    <div className="w-full min-h-screen bg-gray-8 flex flex-col items-center pb-10">
+
+      {/* 1. 상단 타이틀 */}
+      <header className="w-full max-w-xl px-6 pt-8 pb-4">
+        <h1 className="text-semibold-20 font-bold text-gray-1">라이브러리</h1>
+      </header>
+
+      <main className="w-full max-w-xl px-5 flex flex-col gap-6">
+
+        {/* 2. 프로필 메인 카드 */}
+        <div className="w-full rounded-[32px] p-6 shadow-xl text-white relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-primary-6)] opacity-100 z-0"></div>
+
+          <div className="relative z-10 flex flex-col gap-6">
+            <div className="flex items-center gap-4">
+              <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-sm text-indigo-500">
+                {/* SVG: Bot */}
+                <img src={profileLogo} />
+              </div>
+              <div>
+                <h2 className="text-semibold-20">경제학습자</h2>
+                <div className="flex items-center text-primary-2 text-medium-15">
+                    <img src={crownLogo} className="flex w-4 h-4 mr-2" />
+                    <p className="">
+                        Lv.{userStats.level}
+                    </p>
+                    <span className="mx-1">|</span>
+                    <p>{userStats.xp}XP</p>
+                </div>
+              </div>
+            </div>
+
+            {/* 경험치 바 */}
+            <div className="w-full flex flex-col gap-2">
+              <div className="w-full bg-primary-4 h-2.5 rounded-full overflow-hidden">
+                <div className="bg-primary-5 h-full rounded-full w-[20%]"></div>
+              </div>
+              <p className="text-medium-15 text-[12px] text-primary-4 ml-1">다음 레벨까지 150 XP</p>
+            </div>
+          </div>
+        </div>
+
+        {/* 3. 나의 통계 컴포넌트 */}
+        <MyState 
+          streak={7}
+          level={3}
+          terms={5}
+          xp={450}
+        />
+
+        {/* 4. 획득한 배지 컴포넌트 */}
+        <MyBadge badges={badges} />
+
+        {/* 5. 북마크한 용어 */}
+        <section>
+        <div className="bg-white rounded-3xl px-6 py-5 shadow-sm flex justify-between">
+            {/* 왼쪽: 제목만 */}
+            <span className="text-medium-15 font-semibold text-gray-1 mb-5">
+            북마크한 용어
+            </span>
+
+            {/* 오른쪽: 아이콘 원 + 개수 */}
+            <div className="flex items-center gap-3 mt-10">
+                <div className="w-9 h-9 rounded-full bg-blue-100 flex items-center justify-center">
+                    <img src={bookmarkLogo} />
+                </div>
+                <span className="text-semibold-24 text-gray-1">2개</span>
+            </div>
+        </div>
+        </section>
+
+
+        {/* 6. 설정 메뉴 리스트 */}
+        <section className="flex flex-col gap-3">
+          {settings.map((item, index) => (
+            <button
+              key={index}
+              className="w-full bg-white rounded-2xl p-4 shadow-sm text-left text-medium-15 text-gray-1 hover:bg-gray-50 transition-colors"
+            >
+              {item}
+            </button>
+          ))}
+        </section>
+
+      </main>
+    </div>
+  );
+};
 
 export default Profile;

@@ -117,14 +117,14 @@ const CardLearningPage = () => {
         <div className="w-full max-w-xl flex justify-between flex ">
           <button
             onClick={handleNext}
-            className="w-45 h-14 rounded-2xl bg-secondary-5 text-secondary-6 text-medium-18 shadow-lg transition-transform active:scale-95 hover:brightness-95"
+            className="w-45 h-14 rounded-2xl bg-secondary-5 text-secondary-6 text-medium-18 transition-transform active:scale-95 hover:brightness-95"
           >
             모르겠어요
           </button>
 
           <button
             onClick={index === total ? handleStudyCompleted : handleNext}
-            className="w-45 h-14 rounded-2xl bg-primary text-gray-10 text-medium-18 shadow-lg transition-transform active:scale-95 hover:brightness-95"
+            className="w-45 h-14 rounded-2xl bg-primary text-gray-10 text-medium-18 transition-transform active:scale-95 hover:brightness-95"
           >
             {/* index가 total(5)이면 '학습 완료', 아니면 '다음' */}
             {index === total ? "학습 완료" : "다음"}

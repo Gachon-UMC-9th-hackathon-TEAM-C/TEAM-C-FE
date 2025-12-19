@@ -17,9 +17,9 @@ const Sidebar = () => {
     
     const NavigationList = [
         { name: "홈", icon: [homeIcon, homeSelectedIcon], path: "/home" },
-        { name: "복습", icon: [libraryIcon, librarySelectedIcon], path: "/review" },
-        { name: "라이브러리", icon: [mypageIcon, mypageSelectedIcon], path: "/library" },
-        { name: "프로필", icon: [reviewIcon, reviewSelectedIcon], path: "/profile" },
+        { name: "복습", icon: [reviewIcon, reviewSelectedIcon], path: "/review" },
+        { name: "라이브러리", icon: [libraryIcon, librarySelectedIcon], path: "/library" },
+        { name: "프로필", icon: [mypageIcon, mypageSelectedIcon], path: "/profile" },
     ];
         
     return (

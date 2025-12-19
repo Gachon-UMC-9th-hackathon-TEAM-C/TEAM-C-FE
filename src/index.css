@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /* Tailwind core */
-@import "tailwindcss/preflight"
+@import "tailwindcss/preflight";
 @tailwind utilities;
 
 /* Design Tokens */

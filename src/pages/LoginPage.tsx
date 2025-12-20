@@ -1,15 +1,19 @@
 import ECONFLIPLOGO from "../assets/ECONFLIPLogo.svg";
 import NAVERLOGO from "../assets/NaverLogo.svg";
 import KAKAOLOGO from "../assets/KakaoLogo.svg";
-import { useNavigate } from "react-router-dom";
-
 
 const LoginPage = () => {
-    const navigate = useNavigate();
+    // 네이버 로그인
+    const handleNaverLogin = () => {
+        const naverAuthUrl = `${import.meta.env.VITE_API_BASE_URL}/oauth2/authorization/naver`;
+        window.location.href = naverAuthUrl;
+    };
 
-    const handleLogin = () => {
-        navigate("/onboarding", { replace: true})
-    }
+    // 카카오 로그인
+    const handleKakaoLogin = () => {
+        const kakaoAuthUrl = `${import.meta.env.VITE_API_BASE_URL}/oauth2/authorization/kakao`;
+        window.location.href = kakaoAuthUrl;
+    };
 
     return (
         <div className="flex w-full h-screen justify-center items-center bg-linear-to-t from-[#0F52B0] to-[#1575FB] overflow-y-auto">
@@ -33,13 +37,13 @@ const LoginPage = () => {
                     <div className="flex gap-5">
                         <button
                             className="flex justify-center items-center cursor-pointer"
-                            onClick={handleLogin}
+                            onClick={handleNaverLogin}
                         >
                             <img src={NAVERLOGO} alt="Naver Logo" className="mr-2" />
                         </button>
                         <button
                             className="flex justify-center items-center cursor-pointer"
-                            onClick={handleLogin}
+                            onClick={handleKakaoLogin}
                         >
                             <img src={KAKAOLOGO} alt="Kakao Logo" className="mr-2" />
                         </button>

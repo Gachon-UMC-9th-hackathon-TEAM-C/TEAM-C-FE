@@ -1,4 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
+import { useAuthStore } from "../../store/useAuthStore";
 import ECONFLIPICON1 from "../../assets/ECONGLIPICON1.svg"
 import homeIcon from "../../assets/sidebar/home.svg"
 import libraryIcon from "../../assets/sidebar/library.svg"
@@ -13,6 +14,16 @@ const Sidebar = () => {
     
     const location = useLocation();
     const navigation = useNavigate();
+    const setLoggedIn = useAuthStore((state) => state.setLoggedIn);
+
+    const handleLogout = () => {
+        // localStorage 전체 삭제
+        localStorage.clear();
+        // 로그인 상태를 false로 설정
+        setLoggedIn(false);
+        // 로그인 페이지로 이동
+        navigation("/login", { replace: true });
+    };
     
     const NavigationList = [
         { name: "홈", icon: [homeIcon, homeSelectedIcon], path: "/home" },
@@ -22,34 +33,42 @@ const Sidebar = () => {
     ];
         
     return (
-        <div className="flex flex-col w-74 h-full p-10 gap-10 bg-gray-7 text-gray-900">
-            <div className="flex items-end gap-1">
-                <div className="flex justify-center items-center w-[55px] h-[55px] p-1">
-                    <img src={ECONFLIPICON1} className="" />
+        <div className="flex flex-col w-74 h-screen justify-between p-10 bg-gray-7 text-gray-900">
+            <div className="flex flex-col gap-10">
+                <div className="flex items-end gap-1">
+                    <div className="flex justify-center items-center w-[55px] h-[55px] p-1">
+                        <img src={ECONFLIPICON1} className="" />
+                    </div>
+                    <span className="text-semibold-28 text-gray mb-1">이콘플립</span>
                 </div>
-                <span className="text-semibold-28 text-gray mb-1">이콘플립</span>
+                <div className="flex flex-col gap-6">
+                    {
+                        NavigationList.map((navItem) => {
+                            const isSelected = location.pathname === navItem.path 
+    
+                            return (
+                            <nav
+                                key={navItem.name}
+                                className={`flex items-center h-12 gap-4 cursor-pointer ${isSelected ? 'text-blue-500 font-bold' : 'text-gray-900'}`}
+                                onClick={() => {
+                                    navigation(navItem.path);}
+                                }
+                            >
+                                <div className="flex justify-center items-center w-12 h-12 p-2">
+                                    <img src={isSelected ? navItem.icon[1] : navItem.icon[0]} className=""/>
+                                </div>
+                                <span className="text-2xl">{navItem.name}</span>
+                            </nav>)
+                        })
+                    }
+                </div>
             </div>
-            <div className="flex flex-col gap-6">
-                {
-                    NavigationList.map((navItem) => {
-                        const isSelected = location.pathname === navItem.path 
-
-                        return (
-                        <nav
-                            key={navItem.name}
-                            className={`flex items-center h-12 gap-4 cursor-pointer ${isSelected ? 'text-blue-500 font-bold' : 'text-gray-900'}`}
-                            onClick={() => {
-                                navigation(navItem.path);}
-                            }
-                        >
-                            <div className="flex justify-center items-center w-12 h-12 p-2">
-                                <img src={isSelected ? navItem.icon[1] : navItem.icon[0]} className=""/>
-                            </div>
-                            <span className="text-2xl">{navItem.name}</span>
-                        </nav>)
-                    })
-                }
-            </div>
+            <button
+                className="text-medium-24 text-white bg-red-600 rounded-2xl px-4 py-2"
+                onClick={handleLogout}
+            >
+                로그아웃
+            </button>
         </div>
     );
 }

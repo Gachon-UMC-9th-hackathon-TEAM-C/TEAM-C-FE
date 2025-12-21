@@ -80,11 +80,7 @@ const Review = () => {
     );
   }
 
-  const reviewTerms = reviewData.reviewCardList.map((card, index) => ({
-    id: index + 1,
-    category: categoryMap[card.category] || card.category,
-    title: card.term
-  }));
+  const reviewTerms = [ {id:1, category: "금리", title: "샌디"}]
 
   return (
     <div className="flex flex-col w-full items-center justify-center min-h-screen bg-gray-8 px-4 pb-4 pt-[100px]">

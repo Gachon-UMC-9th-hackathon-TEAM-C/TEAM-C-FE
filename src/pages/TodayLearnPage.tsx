@@ -26,7 +26,7 @@ const TodayLearnPage = () => {
         {MOCK_QUESTIONS.map((item, index) => (
           <div 
             key={item.id}
-            className="w-full bg-gray-9 rounded-[24px] p-5 
+            className="w-full bg-gray-9 rounded-3xl p-5 
             flex items-center justify-between shadow-[0_10px_40px_rgba(59,130,246,0.1)]"
           >
             <div className="flex items-center gap-4">

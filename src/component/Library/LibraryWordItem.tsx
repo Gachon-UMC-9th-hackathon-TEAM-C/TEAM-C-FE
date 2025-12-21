@@ -1,29 +1,23 @@
-import { useState } from "react";
-import { WordType } from "../../store/useLibraryStore";
+import { useLibraryStore, WordType } from "../../store/useLibraryStore";
 
 export default function LibraryWordItem({ item }: { item: WordType }) {
-  const [isBookmarked, setIsBookmarked] = useState(false);
+  const { setLibraryWordList, wordList } = useLibraryStore();
 
-  const handleToggleBookmark = () => {
-    setIsBookmarked((prev) => !prev);
+  const handleToggleBookmark = async () => {
+    const updated = wordList.map((w) =>
+      w.cardId === item.cardId
+        ? { ...w, isBookmarked: !w.isBookmarked }
+        : w
+    );
+
+    setLibraryWordList(updated);
+
+    console.log("북마크 변경됨:", updated);
   };
 
   return (
-    <div
-      className="
-        bg-white
-        rounded-xl
-        px-4 py-4
-        transition-all duration-200
-        hover:border-[#1575FB]
-        shadow-sm
-        flex justify-between
-        cursor-pointer
-      "
-    >
-      {/* Left */}
+    <div className="bg-white rounded-xl px-4 py-4 shadow-sm flex justify-between">
       <div>
-        {/* Title + Tag */}
         <div className="flex items-center gap-2">
           <p className="font-semibold text-[#1B1D1F]">{item.title}</p>
 
@@ -32,15 +26,13 @@ export default function LibraryWordItem({ item }: { item: WordType }) {
           </span>
         </div>
 
-        {/* Description */}
         <p className="text-sm text-[#454C53] mt-2 leading-snug">
           {item.description}
         </p>
       </div>
 
-      {/* Bookmark */}
       <button onClick={handleToggleBookmark} className="self-start">
-        {isBookmarked ? (
+        {item.isBookmarked ? (
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="#FFC445"
@@ -48,10 +40,7 @@ export default function LibraryWordItem({ item }: { item: WordType }) {
             stroke="#FFC445"
             className="w-6 h-6"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={1.5}
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
               d="M6.75 3.75h10.5c.414 0 .75.336.75.75v16.06c0 .62-.696.986-1.2.63L12 17.25l-4.8 3.94c-.504.355-1.2-.01-1.2-.63V4.5c0-.414.336-.75.75-.75z"
             />
           </svg>
@@ -63,10 +52,7 @@ export default function LibraryWordItem({ item }: { item: WordType }) {
             stroke="#454C53"
             className="w-6 h-6"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={1.5}
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
               d="M6.75 3.75h10.5c.414 0 .75.336.75.75v16.06c0 .62-.696.986-1.2.63L12 17.25l-4.8 3.94c-.504.355-1.2-.01-1.2-.63V4.5c0-.414.336-.75.75-.75z"
             />
           </svg>

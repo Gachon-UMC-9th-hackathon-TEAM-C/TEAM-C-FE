@@ -7,6 +7,9 @@ export type CategoryType = "INTEREST_RATE" | "INFLATION" | "INVESTMENT" | "FISCA
 export interface ReviewCard {
   term: string;
   category: CategoryType;
+  descript: string;
+  tip: string;
+  example: string;
 }
 
 export interface ReviewPage {

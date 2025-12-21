@@ -29,7 +29,7 @@ const ReviewCardPage = () => {
   }
 
   return (
-    <div className="w-full min-h-screen bg-gray-50 flex flex-col items-center">
+    <div className="w-full min-h-screen bg-gray-7 flex flex-col items-center">
       
       {/* 1. 헤더 */}
       <Header>
@@ -38,9 +38,9 @@ const ReviewCardPage = () => {
           <div className="flex items-center justify-between w-full">
             <div className="flex items-center gap-3">
               
-              <div className="h-6 text-medium-18 text-primary-6">{index}/{total}</div>
+              <div className="mb-2 h-6 text-medium-24 text-primary-6">{index}/{total}</div>
             </div>
-            <div className="h-5.5 text-medium-18 text-primary-6">{progress}%</div>
+            <div className="mb-2 h-6 text-medium-24 text-primary-6">{progress}%</div>
           </div>
           <div className="w-full bg-primary-3 h-3 rounded-full overflow-hidden">
             <div 
@@ -74,7 +74,7 @@ const ReviewCardPage = () => {
         <div className="w-full max-w-xl flex justify-end flex ">
           <button
             onClick={index === total ? handleReviewCompleted : handleNext}
-            className="w-45 h-14 rounded-2xl bg-primary text-gray-10 text-medium-18 shadow-lg transition-transform active:scale-95 hover:brightness-95"
+            className="w-45 h-14 rounded-2xl bg-primary text-white text-medium-24 shadow-lg transition-transform active:scale-95 hover:brightness-95"
           >
             {/* index가 total(5)이면 '학습 완료', 아니면 '다음' */}
             {index === total ? "복습 완료" : "다음"}

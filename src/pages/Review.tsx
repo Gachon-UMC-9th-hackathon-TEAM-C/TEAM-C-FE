@@ -2,36 +2,13 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../services/axiosInstance";
 import time from "../assets/time.svg"
-
-// API 응답 타입
-interface ReviewCard {
-  term: string;
-  category: "INTEREST_RATE" | "INFLATION" | "INVESTMENT" | "FISCAL";
-}
-
-interface ReviewPageResponse {
-  isSuccess: boolean;
-  code: string;
-  message: string;
-  result: {
-    totalReviewCount: number;
-    reviewCardList: ReviewCard[];
-    estimatedDurationMinutes: number;
-  };
-}
-
-// 카테고리 한국어 매핑
-const categoryMap: Record<string, string> = {
-  INTEREST_RATE: "금리",
-  INFLATION: "물가",
-  INVESTMENT: "투자",
-  FISCAL: "재정"
-};
+import { CategoryType, ReviewPageResponse } from "../types/dto/review";
 
 const Review = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  // 복습용어로 가야하는 값들 업데이트
   const [reviewData, setReviewData] = useState<ReviewPageResponse["result"] | null>(null);
 
   useEffect(() => {
@@ -45,16 +22,24 @@ const Review = () => {
         } else {
           setError("데이터를 불러오는데 실패했습니다.");
         }
-      } catch (err: any) {
+      } catch (err) {
         console.error("Review API 호출 실패:", err);
-        setError(err.message || "복습 데이터를 불러오는데 실패했습니다.");
       } finally {
-        setLoading(false);
+        setLoading(false); // 성공하든 실패하든 로딩은 끝남
       }
     };
 
-    fetchReviewData();
+    fetchReviewData(); // 만든 함수 실행
   }, []);
+
+  useEffect(() => {
+    if (!reviewData) return;
+
+    const count = reviewData.totalReviewCount ?? reviewData.reviewCardList.length;
+    if (count === 0) {
+      navigate("/reviewCompletedPage", { replace: true });
+    }
+  }, [reviewData, navigate]);
 
   if (loading) {
     return (
@@ -80,7 +65,39 @@ const Review = () => {
     );
   }
 
-  const reviewTerms = [ {id:1, category: "금리", title: "샌디"}]
+  const categoryLabel = (category: CategoryType) => {
+    switch (category) {
+      case "INTEREST_RATE":
+        return "금리";
+      case "INFLATION":
+        return "물가";
+      case "INVESTMENT":
+        return "투자";
+      case "FISCAL":
+        return "재정";
+      default:
+        return category;
+    }
+  };
+
+  const reviewTerms = Array.from(
+    new Map(
+      reviewData.reviewCardList.map((card) => {
+        const key = `${card.category}-${card.term}`; // 중복 기준(term과 category가 모두 같을 시 중복)
+        return [
+          key,
+          {
+            id: key,
+            category: categoryLabel(card.category),
+            title: card.term,
+            description: card.descript,
+            tip: card.tip,
+            example: card.example,
+          },
+        ] as const;
+      })
+    ).values() //Map 안에 들어있는 값들만 뽑아오는 메서드
+  );
 
   return (
     <div className="flex flex-col w-full items-center justify-center min-h-screen bg-gray-8 px-4 pb-4 pt-[100px]">
@@ -96,13 +113,14 @@ const Review = () => {
           <div className="space-y-1 mb-15">
             <p className="text-primary-6 text-medium-24">복습이 필요해요</p>
             <h2 className="text-bold-32 text-gray-1">
-              2개 용어를 다시 확인해보세요.
+              {reviewData.totalReviewCount}개 용어를 다시 확인해보세요.
             </h2>
           </div>
 
           <div className="bg-secondary-4 rounded-2xl p-6 flex">
             <p className="text-lg font-bold text-gray-700">
-              <span className="text-primary text-bold-40">2개</span> 
+              <span className="text-primary text-bold-40">
+                {reviewData.totalReviewCount}개</span> 
               <span className="text-gray-3 text-semibold-28"> 복습대기 중</span>
             </p>
           </div>
@@ -133,7 +151,7 @@ const Review = () => {
         {/* 하단 버튼 섹션 */}
         <div className="pt-4 space-y-4">
           <button
-          onClick={() => navigate("/reviewcard")}
+          onClick={() => navigate("/reviewcard", {state: { reviewTerms }})}
           className="w-full py-4 text-semibold-28 text-gray-1 py-4 rounded-2xl shadow-md bg-gradient-to-br from-[var(--color-secondary)] to-[var(--color-secondary-6)] transition-all duration-150 ease-out active:scale-[0.97] active:shadow-sm">
             복습 시작
           </button>
@@ -142,7 +160,7 @@ const Review = () => {
             <span className="material-icons-outlined text-base">
                 <img src={time} className="w-4 h-4"/>
             </span>
-            <p>예상 소요시간: 약 {reviewData.estimatedDurationMinutes}분</p>
+            <p>예상 소요시간: 약 {3}분</p>
           </div>
         </div>
 

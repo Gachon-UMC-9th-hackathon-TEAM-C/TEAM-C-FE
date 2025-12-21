@@ -9,6 +9,7 @@ import homeSelectedIcon from "../../assets/sidebar/homeSelected.svg"
 import librarySelectedIcon from "../../assets/sidebar/librarySelected.svg"
 import mypageSelectedIcon from "../../assets/sidebar/mypageSelected.svg"
 import reviewSelectedIcon from "../../assets/sidebar/reviewSelected.svg"
+import { LogOut } from "lucide-react";
 
 const Sidebar = () => {
     
@@ -59,10 +60,11 @@ const Sidebar = () => {
                 </div>
             </div>
             <button
-                className="text-medium-24 text-white bg-red-600 rounded-2xl px-4 py-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex justify-start items-center gap-4 text-medium-24 text-gray-3 rounded-2xl px-4 py-2 cursor-pointer disabled:cursor-not-allowed"
                 onClick={handleLogout}
                 disabled={isLoggingOut}
             >
+                <LogOut/>
                 {isLoggingOut ? "로그아웃 중..." : "로그아웃"}
             </button>
         </div>

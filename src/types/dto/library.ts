@@ -9,6 +9,7 @@ export interface LibraryCard {
   term: string;
   descript: string;
   category: CategoryType;
+  cardId: number;
 }
 
 export interface LibraryPage {

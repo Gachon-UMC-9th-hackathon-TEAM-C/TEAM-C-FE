@@ -33,7 +33,7 @@ const Profile = () => {
       <main className="w-full max-w-2xl px-5 flex flex-col gap-6">
 
         {/* 2. 프로필 메인 카드 */}
-        <div className="w-full p-10 rounded-[32px] p-6 shadow-xl text-white relative overflow-hidden">
+        <div className="w-full p-10 rounded-[32px] p-6 text-white relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-primary-6)] opacity-100 z-0"></div>
 
           <div className="relative z-10 flex flex-col gap-6">
@@ -78,7 +78,7 @@ const Profile = () => {
 
         {/* 5. 북마크한 용어 */}
         <section>
-          <div className="bg-white rounded-3xl px-6 py-5 shadow-sm flex justify-between">
+          <div className="bg-white rounded-3xl px-6 py-5 shadow-xs shadow-blue-100 flex justify-between">
             {/* 왼쪽: 제목만 */}
             <span className="text-medium-18 text-gray-1 mb-5">
             북마크한 용어
@@ -100,7 +100,7 @@ const Profile = () => {
           {settings.map((item, index) => (
             <button
               key={index}
-              className="w-full bg-white rounded-2xl p-4 shadow-sm text-left text-medium-18 text-gray-1 hover:bg-gray-50 transition-colors"
+              className="w-full bg-white rounded-2xl p-4 shadow-xs shadow-blue-100 text-left text-medium-18 text-gray-1 hover:bg-gray-50 transition-colors"
             >
               {item}
             </button>

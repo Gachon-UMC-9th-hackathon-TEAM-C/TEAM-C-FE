@@ -25,7 +25,7 @@ const StatCard: React.FC<StatCardProps> = ({ label, value, iconSrc, tone = "blue
       : "bg-indigo-100 text-indigo-500";
 
   return (
-    <div className="bg-white rounded-2xl pt-2 pb-4 px-4 flex flex-col justify-between h-24 shadow-sm">
+    <div className="bg-white rounded-2xl pt-2 pb-4 px-4 flex flex-col justify-between h-24 shadow-xs shadow-blue-100">
       <span className="text-medium-15 text-primary-6">{label}</span>
 
       <div className="flex items-center justify-end gap-2">

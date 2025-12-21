@@ -1,4 +1,3 @@
-import MyBadge, { Badge } from "../component/MyBadge";
 import MyState from "../component/MyState";
 import bookmarkLogo from "../assets/bookmarkLogo.svg";
 import profileLogo from "../assets/profileLogo.svg";
@@ -51,14 +50,7 @@ const Profile = () => {
     return { earnedXp, progressPercentage };
   };
 
-  const { earnedXp, progressPercentage } = calculateXpProgress();
-
-  const badges: Badge[] = [
-    { id: 1, type: 'flame', name: "일주일 연속", active: true },
-    { id: 2, type: 'trophy', name: "첫완료", active: false },
-    { id: 3, type: 'book', name: "10개 학습", active: false },
-    { id: 4, type: 'award', name: "완벽한 점수", active: false },
-  ]; 
+  const { progressPercentage } = calculateXpProgress(); 
 
   const settings = ["학습목표 설정", "알림설정", "데이터 초기화"];
 

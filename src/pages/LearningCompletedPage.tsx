@@ -2,7 +2,7 @@ import PrizeIcon from "../assets/PrizeIcon.svg"
 import STARICON from "../assets/STARICON.svg"
 import ROTATEARROW from "../assets/ROTATEARROW.svg"
 import WordCard from "../component/LearningCompleted/WordCard"
-import { useLocation, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { StudyComplete } from "../types/dto/card"
 import { postCompleteStudy } from "../services/cardService"
@@ -10,7 +10,6 @@ import { postCompleteStudy } from "../services/cardService"
 const LearningCompletedPage = () => {
     const [learningCompleted, setLearningCompleted] = useState<StudyComplete>()
     const navigate = useNavigate()
-    const { correctCount, totalProblemCount } = useLocation().state as { correctCount: number, totalProblemCount: number }
     
     useEffect(() => {
         const fetchLearningCompleted = async () => {

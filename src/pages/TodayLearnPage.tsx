@@ -1,5 +1,4 @@
 import { useLocation, useNavigate } from 'react-router-dom';
-import { MOCK_QUESTIONS } from '../constants/mockQuiz';
 import { Timer } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { QuizQuestion, StudyCard } from '../types/dto/card';

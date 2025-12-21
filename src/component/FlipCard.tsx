@@ -1,4 +1,3 @@
-import { useState } from "react";
 import rotateArrow from "../assets/rotateArrow.svg"
 
 interface FlipCardProps {

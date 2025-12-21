@@ -15,7 +15,7 @@ const OAuthCallbackPage = () => {
                 setLoggedIn(true);
 
                 // 홈으로 리다이렉트
-                navigate("/home", { replace: true });
+                navigate("/onboarding", { replace: true });
             } catch (err: any) {
                 console.error("OAuth 콜백 처리 실패:", err);
                 setError(err.message || "로그인 처리 중 오류가 발생했습니다.");

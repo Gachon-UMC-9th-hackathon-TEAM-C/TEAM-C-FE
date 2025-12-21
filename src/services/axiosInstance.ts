@@ -1,5 +1,9 @@
-import axios, { AxiosError, AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from "axios";
 import { useAuthStore } from "../store/useAuthStore";
+
+// refresh 토큰 재발급 시도 여부 (한 번만 시도)
+let isRefreshing = false;
+let refreshSubscribers: Array<(token: string) => void> = [];
 
 const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
@@ -9,13 +13,34 @@ const axiosInstance = axios.create({
   withCredentials: true, // httpOnly 쿠키를 위한 설정
 });
 
+// refresh 토큰 재발급 함수
+const refreshAccessToken = async (): Promise<boolean> => {
+  try {
+    await axios.post(
+      `${import.meta.env.VITE_API_BASE_URL}/api/auth/refresh`,
+      {},
+      { withCredentials: true }
+    );
+    
+    // refresh 성공 시 구독자들에게 알림
+    refreshSubscribers.forEach((callback) => callback(""));
+    refreshSubscribers = [];
+    return true;
+  } catch (error) {
+    // refresh 실패
+    refreshSubscribers = [];
+    return false;
+  }
+};
+
 // Response Interceptor - 에러 처리
 axiosInstance.interceptors.response.use(
   (response: AxiosResponse) => {
-    // 성공 응답은 그대로 반환
     return response;
   },
-  (error: AxiosError) => {
+  async (error: AxiosError) => {
+    const originalRequest = error.config as InternalAxiosRequestConfig & { _retry?: boolean };
+    
     // 에러 처리
     if (error.response) {
       // 서버가 응답했지만 에러 상태 코드
@@ -24,15 +49,78 @@ axiosInstance.interceptors.response.use(
 
       switch (status) {
         case 401:
-          // 인증 실패 - 토큰 만료 또는 유효하지 않은 토큰 (쿠키가 없거나 만료됨)
-          // 로그인 상태를 false로 설정
-          const { setLoggedIn } = useAuthStore.getState();
-          setLoggedIn(false);
-          // 로그인 페이지로 리다이렉트
-          if (window.location.pathname !== "/login") {
-            window.location.href = "/login";
+          // 인증 실패 - 토큰 만료 또는 유효하지 않은 토큰
+          // refresh 요청 자체가 401이면 무시
+          if (originalRequest.url?.includes("/api/auth/refresh")) {
+            // refresh 실패 시 로그아웃 처리
+            const { setLoggedIn } = useAuthStore.getState();
+            
+            // 로그아웃 API 호출
+            axios.post(
+              `${import.meta.env.VITE_API_BASE_URL}/api/auth/logout`,
+              {},
+              { withCredentials: true }
+            ).catch(() => {
+              // 로그아웃 API 실패해도 무시하고 진행
+            });
+            
+            // 로그인 상태를 false로 설정
+            setLoggedIn(false);
+            
+            // localStorage 정리
+            localStorage.clear();
+            
+            // 로그인 페이지로 리다이렉트
+            if (window.location.pathname !== "/login") {
+              window.location.href = "/login";
+            }
+            
+            return Promise.reject(error);
           }
-          break;
+          
+          // 이미 refresh 중이면 대기
+          if (isRefreshing) {
+            return new Promise((resolve) => {
+              refreshSubscribers.push(() => {
+                resolve(axiosInstance(originalRequest));
+              });
+            });
+          }
+          
+          // refresh 시도
+          isRefreshing = true;
+          const refreshSuccess = await refreshAccessToken();
+          isRefreshing = false;
+          
+          if (refreshSuccess) {
+            // refresh 성공 시 원래 요청 재시도
+            return axiosInstance(originalRequest);
+          } else {
+            // refresh 실패 시 로그아웃 처리
+            const { setLoggedIn } = useAuthStore.getState();
+            
+            // 로그아웃 API 호출
+            axios.post(
+              `${import.meta.env.VITE_API_BASE_URL}/api/auth/logout`,
+              {},
+              { withCredentials: true }
+            ).catch(() => {
+              // 로그아웃 API 실패해도 무시하고 진행
+            });
+            
+            // 로그인 상태를 false로 설정
+            setLoggedIn(false);
+            
+            // localStorage 정리
+            localStorage.clear();
+            
+            // 로그인 페이지로 리다이렉트
+            if (window.location.pathname !== "/login") {
+              window.location.href = "/login";
+            }
+            
+            return Promise.reject(error);
+          }
 
         case 403:
           // 권한 없음

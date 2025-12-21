@@ -1,13 +1,90 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axiosInstance from "../services/axiosInstance";
 import time from "../assets/time.svg"
 
-const Review = () => {
-    const navigate = useNavigate();
+// API 응답 타입
+interface ReviewCard {
+  term: string;
+  category: "INTEREST_RATE" | "INFLATION" | "INVESTMENT" | "FISCAL";
+}
 
-  const reviewTerms = [
-    { id: 1, category: '물가', title: '인플레이션' },
-    { id: 2, category: '물가', title: '디플레이션' },
-  ];
+interface ReviewPageResponse {
+  isSuccess: boolean;
+  code: string;
+  message: string;
+  result: {
+    totalReviewCount: number;
+    reviewCardList: ReviewCard[];
+    estimatedDurationMinutes: number;
+  };
+}
+
+// 카테고리 한국어 매핑
+const categoryMap: Record<string, string> = {
+  INTEREST_RATE: "금리",
+  INFLATION: "물가",
+  INVESTMENT: "투자",
+  FISCAL: "재정"
+};
+
+const Review = () => {
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [reviewData, setReviewData] = useState<ReviewPageResponse["result"] | null>(null);
+
+  useEffect(() => {
+    const fetchReviewData = async () => {
+      try {
+        setLoading(true);
+        const response = await axiosInstance.get<ReviewPageResponse>("/api/review");
+        
+        if (response.data.isSuccess && response.data.result) {
+          setReviewData(response.data.result);
+        } else {
+          setError("데이터를 불러오는데 실패했습니다.");
+        }
+      } catch (err: any) {
+        console.error("Review API 호출 실패:", err);
+        setError(err.message || "복습 데이터를 불러오는데 실패했습니다.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchReviewData();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex w-full h-screen items-center justify-center">
+        <div className="text-gray-9 text-medium-18">로딩 중...</div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex w-full h-screen items-center justify-center">
+        <div className="text-red-500 text-medium-18">{error}</div>
+      </div>
+    );
+  }
+
+  if (!reviewData) {
+    return (
+      <div className="flex w-full h-screen items-center justify-center">
+        <div className="text-gray-9 text-medium-18">데이터가 없습니다.</div>
+      </div>
+    );
+  }
+
+  const reviewTerms = reviewData.reviewCardList.map((card, index) => ({
+    id: index + 1,
+    category: categoryMap[card.category] || card.category,
+    title: card.term
+  }));
 
   return (
     <div className="flex flex-col w-full items-center justify-center min-h-screen bg-gray-50 p-4">
@@ -22,13 +99,13 @@ const Review = () => {
           <div className="space-y-1 mb-15">
             <p className="text-primary-6 text-medium-15 font-semibold">복습이 필요해요</p>
             <h2 className="text-medium-18 font-bold text-gray-1">
-              2개 용어를 다시 확인해보세요.
+              {reviewData.totalReviewCount}개 용어를 다시 확인해보세요.
             </h2>
           </div>
 
           <div className="bg-secondary-4 rounded-2xl p-6 flex">
             <p className="text-lg font-bold text-gray-700">
-              <span className="text-primary text-semibold-24">2개</span> 
+              <span className="text-primary text-semibold-24">{reviewData.totalReviewCount}개</span> 
               <span className="text-gray-3 text-medium-18 font-bold"> 복습대기 중</span>
             </p>
           </div>
@@ -60,7 +137,7 @@ const Review = () => {
         <div className="pt-4 space-y-4">
           <button
             onClick={() => navigate("/reviewcard")}
-            className="w-full py-4 text-medium-15 font-bold text-gray-1 py-4 rounded-2xl shadow-md bg-gradient-to-br from-[var(--color-secondary)] to-[var(--color-secondary-6)] transition-all duration-150 ease-out active:scale-[0.97] active:shadow-sm cursor-pointer">
+            className="w-full py-4 text-medium-15 font-bold text-gray-1 rounded-2xl shadow-md bg-gradient-to-br from-[var(--color-secondary)] to-[var(--color-secondary-6)] transition-all duration-150 ease-out active:scale-[0.97] active:shadow-sm cursor-pointer">
               복습 시작
           </button>
           
@@ -68,7 +145,7 @@ const Review = () => {
             <span className="material-icons-outlined text-base">
                 <img src={time} className="w-4 h-4"/>
             </span>
-            <p>예상 소요시간: 약 2분</p>
+            <p>예상 소요시간: 약 {reviewData.estimatedDurationMinutes}분</p>
           </div>
         </div>
 

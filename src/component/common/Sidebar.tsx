@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { useAuthStore } from "../../store/useAuthStore";
+import { useLogout } from "../../hooks/auth/useLogout";
 import ECONFLIPICON1 from "../../assets/ECONGLIPICON1.svg"
 import homeIcon from "../../assets/sidebar/home.svg"
 import libraryIcon from "../../assets/sidebar/library.svg"
@@ -14,15 +14,10 @@ const Sidebar = () => {
     
     const location = useLocation();
     const navigation = useNavigate();
-    const setLoggedIn = useAuthStore((state) => state.setLoggedIn);
+    const { logout, isLoggingOut } = useLogout();
 
     const handleLogout = () => {
-        // localStorage 전체 삭제
-        localStorage.clear();
-        // 로그인 상태를 false로 설정
-        setLoggedIn(false);
-        // 로그인 페이지로 이동
-        navigation("/login", { replace: true });
+        logout();
     };
     
     const NavigationList = [
@@ -64,10 +59,11 @@ const Sidebar = () => {
                 </div>
             </div>
             <button
-                className="text-medium-24 text-white bg-red-600 rounded-2xl px-4 py-2"
+                className="text-medium-24 text-white bg-red-600 rounded-2xl px-4 py-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 onClick={handleLogout}
+                disabled={isLoggingOut}
             >
-                로그아웃
+                {isLoggingOut ? "로그아웃 중..." : "로그아웃"}
             </button>
         </div>
     );

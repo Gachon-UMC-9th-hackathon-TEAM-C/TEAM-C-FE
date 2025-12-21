@@ -31,7 +31,7 @@ const CardLearningPage = () => {
   }
 
   return (
-    <div className="w-full min-h-screen bg-gray-50 flex flex-col items-center">
+    <div className="w-full min-h-screen bg-gray-7 flex flex-col items-center">
       
       {/* 1. 헤더 */}
       <Header>
@@ -100,7 +100,7 @@ const CardLearningPage = () => {
             {related.map((word, i) => (
               <button
                 key={i}
-                className="rounded-full bg-white px-5 py-1 text-medium-18 text-gray-1 border border-gray-7 hover:bg-gray-50"
+                className="rounded-full bg-gray-9 px-5 py-1 text-medium-18 text-gray-1 border border-gray-7 hover:bg-gray-50"
               >
                 {word}
               </button>

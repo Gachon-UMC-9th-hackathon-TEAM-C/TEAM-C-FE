@@ -10,6 +10,28 @@ import { UserHomePage } from "../../types/dto/user";
 const HomePage = () => {
   const [homeInfo, setHomeInfo] = useState<UserHomePage | null>(null);
   const [loading, setLoading] = useState(true);
+  const [selectedCategoryArray, setSelectedCategoryArray] = useState<string[]>([]);
+
+  const CATEGORIES = [
+    {category:"INTEREST_RATE", value: "금리" },   // 금리
+    {category:"INFLATION", value: "물가" },       // 물가
+    {category:"INVESTMENT", value: "투자" },      // 투자
+    {category:"FISCAL", value: "재정" },          // 재정
+  ];
+
+  const getCategoryLabel = (category: string) => {
+    const found = CATEGORIES.find(c => c.category === category);
+    return found ? found.value : category;
+  };
+
+  const handleSelectCategory = (category: string) => {
+    setSelectedCategoryArray([...selectedCategoryArray, category]);
+  };
+
+  const handleDeleteCategory = (category: string) => {
+    setSelectedCategoryArray(selectedCategoryArray.filter((c) => c !== category));
+  };
+
 
   useEffect(() => {
     const fetchHomeInfo = async () => {
@@ -34,7 +56,10 @@ const HomePage = () => {
       </div>
     );
   }
+
   console.log(homeInfo);
+  console.log(selectedCategoryArray);
+  
   return (
     <div className="w-full min-h-screen bg-[#F3F6FB] flex justify-center">
       <div className="w-full max-w-[570px] pt-[100px] px-6 mx-auto">
@@ -46,7 +71,7 @@ const HomePage = () => {
         <TodayLearningCard
           dailyGoalCount={homeInfo?.dailyGoalCount ?? 0}
           studyCompletedCardCount={homeInfo?.studyCompletedCardCount ?? 0}
-
+          selectedCategoryArray={selectedCategoryArray}
         />
 
         {/* 복습 카드 */}
@@ -65,10 +90,23 @@ const HomePage = () => {
             homeInfo?.recommendedCategory?.map((c) => (
               <Tag
                 key={c.category}
-                label={c.category}
+                category={c.category}
+                label={getCategoryLabel(c.category)}
+                categoryList={selectedCategoryArray}
+                addCategory={handleSelectCategory}
+                deleteCategory={handleDeleteCategory}
               />
             )) :
-            <div>추천 주제가 없습니다.</div>
+            (CATEGORIES.map((c) => (
+              <Tag
+                key={c.category}
+                category={c.category}
+                label={c.value}
+                categoryList={selectedCategoryArray}
+                addCategory={handleSelectCategory}
+                deleteCategory={handleDeleteCategory}
+              />
+            )))
             }
         </div>
       </div>
@@ -77,7 +115,7 @@ const HomePage = () => {
         {/* 아래 문구 */}
         <p className="mt-10 text-center text-[18px] font-bold text-[#1B1D1F] flex items-center justify-center gap-2">
           <img src={cardIcon} alt="card" className="w-10 h-10 object-contain" />
-          오늘 5장만 뒤집자!
+          오늘 {homeInfo?.dailyGoalCount ?? 0}장만 뒤집자!
         </p>
       </div>
     </div>

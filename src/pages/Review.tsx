@@ -160,7 +160,7 @@ const Review = () => {
             <span className="material-icons-outlined text-base">
                 <img src={time} className="w-4 h-4"/>
             </span>
-            <p>예상 소요시간: 약 {reviewData.estimatedDurationMinutes}분</p>
+            <p>예상 소요시간: 약 {3}분</p>
           </div>
         </div>
 

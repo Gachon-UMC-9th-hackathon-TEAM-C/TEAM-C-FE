@@ -7,6 +7,7 @@ interface FlipCardProps {
   description?: string;
   example?: string;
   onTap?: () => void;
+  isFlipped?: boolean;
 }
 
 const FlipCard = ({ 
@@ -14,19 +15,14 @@ const FlipCard = ({
   title = "인플레이션", 
   description = "물가가 지속적으로 상승하는 현상", 
   example = "같은 돈으로 살 수 있는 물건이 줄어드는 것",
-  onTap
+  onTap,
+  isFlipped
 }: FlipCardProps) => {
-  const [isFlipped, setIsFlipped] = useState(false);
-
-  const handleFlip = () => {
-    setIsFlipped(!isFlipped);
-    onTap?.();
-  };
 
   return (
     <div className="h-[330px] w-full max-w-[600px] [perspective:1000px]">
       <div
-        onClick={handleFlip}
+        onClick={onTap}
         className={`relative h-full w-full transition-all duration-500 [transform-style:preserve-3d] cursor-pointer ${
           isFlipped ? "[transform:rotateY(180deg)]" : ""
         }`}

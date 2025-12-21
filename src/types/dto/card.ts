@@ -54,6 +54,7 @@ export interface SubmitQuizAnswerRequest {
 export interface QuizAnswer {
   isCorrect: boolean;
   commentary: string;
+  correctAnswer: string;
 }
 
 export type SubmitQuizAnswerResponse = CommonResponse<QuizAnswer>;

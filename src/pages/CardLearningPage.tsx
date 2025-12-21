@@ -1,33 +1,42 @@
-import { useMemo, useState } from "react";
+import {  useState } from "react";
 import Header from "../component/common/Header";
 import FlipCard from "../component/FlipCard";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { QuizQuestion, StudyCard } from "../types/dto/card";
+import { postConfirmCard } from "../services/cardService";
 
 const CardLearningPage = () => {
+  const { cards, quizzes, totalSteps } = useLocation().state as { cards: StudyCard[], quizzes: QuizQuestion[], totalSteps: number };
   const [index, setIndex] = useState(1);
   const [showExample, setShowExample] = useState(false); // ✅ 예문 보기 상태 추가
-  const total = 5;
+  const [isFlipped, setIsFlipped] = useState(false);
+  const total = totalSteps;
   const progress = Math.round((index / total) * 100);
   const navigate = useNavigate();
 
-  const related = useMemo(() => ["연관용어", "연관용어", "연관용어"], []);
-
-  // 현재 카드의 데이터 (나중에 배열로 관리할 때를 대비해 변수로 뺌)
-  const currentCard = {
-    tag: "물가",
-    title: "인플레이션",
-    description: "물가가 지속적으로 상승하는 현상",
-    example: "같은 돈으로 살 수 있는 물건이 줄어드는 것" // ✅ 예문 데이터
-  };
+  const handeFilpCard = () => {
+    setIsFlipped(!isFlipped)
+  }
 
   // 다음 버튼 눌렀을 때 처리 (예문 닫기 + 인덱스 증가)
   const handleNext = () => {
     setShowExample(false); // 다음 카드로 가면 예문 다시 닫기
+    setIsFlipped(false)
     setIndex((v) => Math.min(total, v + 1));
   };
 
   const handleStudyCompleted = () => {
-    navigate("/Quiz")
+    navigate("/quiz", { state: { quizzes } });
+  }
+
+  const handleSubmitDontknow = () => {
+    postConfirmCard(cards[index - 1].cardId, { dontKnow: true });
+    handleNext();
+  }
+
+  const handleSubmitKnow = () => {
+    postConfirmCard(cards[index - 1].cardId, { dontKnow: false });
+    handleNext();
   }
 
   return (
@@ -63,11 +72,12 @@ const CardLearningPage = () => {
         {/* 카드 섹션 */}
         <div className="relative px-10 flex justify-center w-full mt-8">
           <FlipCard 
-            tag={currentCard.tag}
-            title={currentCard.title}
-            description={currentCard.description}
-            example={currentCard.example}
-            onTap={() => console.log("뒤집기!")}
+            tag={cards[index - 1].category}
+            title={cards[index - 1].term}
+            description={cards[index - 1].descript}
+            example={cards[index - 1].example}
+            onTap={handeFilpCard}
+            isFlipped={isFlipped}
           />
         </div>
 
@@ -85,7 +95,7 @@ const CardLearningPage = () => {
             // [상태 2] 버튼 누른 후 -> 예문 박스 등장
             <div className="w-full rounded-xl bg-primary-5 border border-primary-3 py-4 px-6 text-center animate-fadeIn">
               <p className="flex text-gray-3 text-medium-18 break-keep">
-                {currentCard.example}
+                {cards[index - 1].example}
               </p>
             </div>
           )}
@@ -97,7 +107,7 @@ const CardLearningPage = () => {
             연관용어
           </div>
           <div className="flex flex-wrap gap-2">
-            {related.map((word, i) => (
+            {cards[index - 1].relatedTerms.map((word, i) => (
               <button
                 key={i}
                 className="rounded-full bg-gray-9 px-5 py-1 text-medium-18 text-gray-1 border border-gray-7 hover:bg-gray-50"
@@ -116,14 +126,14 @@ const CardLearningPage = () => {
         */}
         <div className="w-full max-w-xl flex justify-between flex ">
           <button
-            onClick={handleNext}
+            onClick={handleSubmitDontknow}
             className="w-45 h-14 rounded-2xl bg-secondary-5 text-secondary-6 text-medium-24 transition-transform active:scale-95 hover:brightness-95"
           >
             모르겠어요
           </button>
 
           <button
-            onClick={index === total ? handleStudyCompleted : handleNext}
+            onClick={index === total ? handleStudyCompleted : handleSubmitKnow}
             className="w-45 h-14 rounded-2xl bg-primary text-gray-10 text-medium-24 transition-transform active:scale-95 hover:brightness-95"
           >
             {/* index가 total(5)이면 '학습 완료', 아니면 '다음' */}

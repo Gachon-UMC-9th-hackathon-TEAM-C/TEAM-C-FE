@@ -4,12 +4,14 @@ import ProgressStatus from "../../common/ProgressStatus";
 interface TodayLearningCardProps {
   dailyGoalCount: number;
   studyCompletedCardCount: number;
+  selectedCategoryArray: string[];
 
 }
 
 const TodayLearningCard = ({
   dailyGoalCount,
   studyCompletedCardCount,
+  selectedCategoryArray,
 }: TodayLearningCardProps) => {
   const navigate = useNavigate();
 
@@ -68,7 +70,7 @@ const TodayLearningCard = ({
 
       {/* 버튼 */}
       <button
-        onClick={() => navigate("/todaylearn")}
+        onClick={() => navigate("/todaylearn", { state: { selectedCategoryArray } })}
         disabled={dailyGoalCount === 0}
         className="
           w-10/12 mx-auto block py-4

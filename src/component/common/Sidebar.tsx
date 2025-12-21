@@ -60,7 +60,7 @@ const Sidebar = () => {
                 </div>
             </div>
             <button
-                className="flex justify-start items-center gap-3 text-medium-24 text-gray-3 rounded-2xl px-4 py-2 cursor-pointer disabled:cursor-not-allowed"
+                className="flex justify-start items-center gap-4 text-medium-24 text-gray-3 rounded-2xl px-4 py-2 cursor-pointer disabled:cursor-not-allowed"
                 onClick={handleLogout}
                 disabled={isLoggingOut}
             >

@@ -1,32 +1,37 @@
 import { useState } from "react";
 import Header from "../component/common/Header";
 import FlipCard from "../component/FlipCard";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import axiosInstance from "../services/axiosInstance";
+
 
 const ReviewCardPage = () => {
   const navigate = useNavigate()
   const [index, setIndex] = useState(1); // 시작은 1
-  const total = 2; 
-  
-  // 계산 로직: (1 / 2) * 100 = 50% 가 됨
-  const progress = Math.round((index / total) * 100);
+  const { state } = useLocation();
+  const reviewTerms = state?.reviewTerms ?? [];
+  const total = reviewTerms.length;
+  const current = reviewTerms[index - 1];
+  const [completedCount, setCompletedCount] = useState(0);
 
-  // 현재 카드의 데이터 (나중에 배열로 관리할 때를 대비해 변수로 뺌)
-  const currentCard = {
-    tag: "물가",
-    title: "인플레이션",
-    description: "물가가 지속적으로 상승하는 현상",
-    example: "같은 돈으로 살 수 있는 물건이 줄어드는 것" // ✅ 예문 데이터
-  };
+  // 0 ~ 100
+  const progress = total === 0 ? 0 : Math.round((completedCount / total) * 100);
 
-  // 다음 버튼 눌렀을 때 처리 (예문 닫기 + 인덱스 증가)
   const handleNext = () => {
-    setIndex((v) => Math.min(total, v + 1));
+    setCompletedCount((c) => Math.min(total, c + 1)); // 완료 +1
+    setIndex((v) => Math.min(total, v + 1));          // 다음 카드로
   };
 
-  const handleReviewCompleted = () => {
-    navigate("/reviewCompletedPage")
+  const handleReviewCompleted = async () => {
+  try {
+    await axiosInstance.patch("/api/review"); // ✅ 완료 확정 처리
+    setCompletedCount(total); 
+    navigate("/reviewCompletedPage", { replace: true });
+  } catch (e) {
+    console.error("복습 완료 처리 실패:", e);
+    alert("복습 완료 처리에 실패했어요. 다시 시도해주세요.");
   }
+};
 
   return (
     <div className="w-full min-h-screen bg-gray-7 flex flex-col items-center">
@@ -38,7 +43,7 @@ const ReviewCardPage = () => {
           <div className="flex items-center justify-between w-full">
             <div className="flex items-center gap-3">
               
-              <div className="mb-2 h-6 text-medium-24 text-primary-6">{index}/{total}</div>
+              <div className="mb-2 h-6 text-medium-24 text-primary-6">{completedCount}/{total}</div>
             </div>
             <div className="mb-2 h-6 text-medium-24 text-primary-6">{progress}%</div>
           </div>
@@ -56,11 +61,11 @@ const ReviewCardPage = () => {
         
         {/* 카드 섹션 */}
         <div className="relative px-10 flex justify-center w-full mt-8">
-          <FlipCard 
-            tag={currentCard.tag}
-            title={currentCard.title}
-            description={currentCard.description}
-            example={currentCard.example}
+          <FlipCard
+            tag={current.category}
+            title={current.title}
+            description={current.description}
+            example={current.example}
             onTap={() => console.log("뒤집기!")}
           />
         </div>

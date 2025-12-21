@@ -1,9 +1,10 @@
-import { useUserStore } from "../../../store/useUserStore";
 import crownIcon from "../../../assets/icons/crown.png";
 
-const UserHeader = () => {
-  const { level } = useUserStore();
+interface UserHeaderProps {
+  level: number;
+}
 
+const UserHeader = ({ level }: UserHeaderProps) => {
   return (
     <div className="mb-6">
       {/* 상단 제목 */}

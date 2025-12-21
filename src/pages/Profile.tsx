@@ -3,22 +3,62 @@ import MyState from "../component/MyState";
 import bookmarkLogo from "../assets/bookmarkLogo.svg";
 import profileLogo from "../assets/profileLogo.svg";
 import crownLogo from "../assets/crownLogo.svg";
+import { UserMyPage } from "../types/dto/user";
+import { useEffect, useState } from "react";
+import { getMyPage } from "../services/userService";
+import MyBadgeList from "../component/profile/MyBadgeList";
 
 const Profile = () => {
-  // 데이터 정의 (실제로는 API에서 받아오거나 상태로 관리)
-  const userStats = {
-    streak: 7,
-    level: 3,
-    terms: 5,
-    xp: 450,
+  const [userInfo, setUserInfo] = useState<UserMyPage>();
+  
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      try {
+        const response = await getMyPage();
+        setUserInfo(response.result);
+      } catch (error) {
+        console.error("Error fetching user info:", error);
+      }
+    }
+
+    fetchUserInfo();
+  }, []);
+
+  console.log("userInfo", userInfo);
+
+  // 경험치 진행률 계산
+  const calculateXpProgress = () => {
+    if (!userInfo) {
+      return { earnedXp: 0, progressPercentage: 0 };
+    }
+    
+    const requiredXp = userInfo.requiredXpForNextLevel;
+    const remainingXp = userInfo.remainingXpToNextLevel;
+
+    console.log("requiredXp", requiredXp);
+    console.log("remainingXp", remainingXp);
+    
+    // 지금까지 획득한 경험치 = 총 필요 경험치 - 남은 경험치
+    const earnedXp = requiredXp - remainingXp;
+    
+    // 진행률 = (획득한 경험치 / 총 필요 경험치) * 100
+    const progressPercentage = requiredXp > 0 
+      ? Math.min((earnedXp / requiredXp) * 100, 100) 
+      : 0;
+
+    console.log(earnedXp, progressPercentage);
+
+    return { earnedXp, progressPercentage };
   };
+
+  const { earnedXp, progressPercentage } = calculateXpProgress();
 
   const badges: Badge[] = [
     { id: 1, type: 'flame', name: "일주일 연속", active: true },
     { id: 2, type: 'trophy', name: "첫완료", active: false },
     { id: 3, type: 'book', name: "10개 학습", active: false },
     { id: 4, type: 'award', name: "완벽한 점수", active: false },
-  ];
+  ]; 
 
   const settings = ["학습목표 설정", "알림설정", "데이터 초기화"];
 
@@ -33,7 +73,7 @@ const Profile = () => {
       <main className="w-full max-w-2xl px-5 flex flex-col gap-6">
 
         {/* 2. 프로필 메인 카드 */}
-        <div className="w-full p-10 rounded-[32px] p-6 text-white relative overflow-hidden">
+        <div className="w-full p-10 rounded-[32px] text-white relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-primary-6)] opacity-100 z-0"></div>
 
           <div className="relative z-10 flex flex-col gap-6">
@@ -43,14 +83,14 @@ const Profile = () => {
                 <img src={profileLogo} />
               </div>
               <div>
-                <h2 className="text-semibold-24 text-gray-9">경제학습자</h2>
+                <h2 className="text-semibold-24 text-gray-9">{userInfo?.title}</h2>
                 <div className="flex items-center text-primary-3 text-medium-18">
                     <img src={crownLogo} className="flex w-5 h-5 mr-2" />
                     <p className="">
-                        Lv.{userStats.level}
+                        Lv.{userInfo?.currentLevel}
                     </p>
                     <span className="mx-1">|</span>
-                    <p>{userStats.xp}XP</p>
+                    <p>{userInfo?.currentXp}XP</p>
                 </div>
               </div>
             </div>
@@ -58,23 +98,31 @@ const Profile = () => {
             {/* 경험치 바 */}
             <div className="w-full flex flex-col gap-2">
               <div className="w-full bg-primary-4 h-2.5 rounded-full overflow-hidden">
-                <div className="bg-primary-5 h-full rounded-full w-[20%]"></div>
+                <div 
+                  className="bg-primary-5 h-full rounded-full transition-all duration-300"
+                  style={{ width: `${progressPercentage}%` }}
+                ></div>
               </div>
-              <p className="text-medium-15 text-primary-4 ml-1">다음 레벨까지 150 XP</p>
+              <p className="text-medium-15 text-primary-4 ml-1">
+                다음 레벨까지 {userInfo?.remainingXpToNextLevel ?? 0} XP
+              </p>
             </div>
           </div>
         </div>
 
         {/* 3. 나의 통계 컴포넌트 */}
         <MyState 
-          streak={7}
-          level={3}
-          terms={5}
-          xp={450}
+          streak={userInfo?.streak ?? 0}
+          level={userInfo?.currentLevel ?? 0}
+          terms={userInfo?.totalLearnedCard ?? 0}
+          xp={userInfo?.currentXp ?? 0}
         />
 
-        {/* 4. 획득한 배지 컴포넌트 */}
+        {/* 4. 획득한 배지 컴포넌트 
         <MyBadge badges={badges} />
+        */}
+        
+        <MyBadgeList badges={userInfo?.badges ?? []} />
 
         {/* 5. 북마크한 용어 */}
         <section>
@@ -89,7 +137,7 @@ const Profile = () => {
                 <div className="w-9 h-9 rounded-full bg-primary-4 flex items-center justify-center">
                     <img src={bookmarkLogo} />
                 </div>
-                <span className="text-semibold-28 text-gray-1">2개</span>
+                <span className="text-semibold-28 text-gray-1">{userInfo?.totalBookmarkedCard ?? 0}개</span>
             </div>
         </div>
         </section>

@@ -1,16 +1,26 @@
 import { useState } from "react";
 import rotateArrow from "../assets/rotateArrow.svg"
 
+interface FlipCardProps {
+  tag?: string;
+  title?: string;
+  description?: string;
+  example?: string;
+  onTap?: () => void;
+}
+
 const FlipCard = ({ 
   tag = "물가", 
   title = "인플레이션", 
   description = "물가가 지속적으로 상승하는 현상", 
-  example = "같은 돈으로 살 수 있는 물건이 줄어드는 것" 
-}) => {
+  example = "같은 돈으로 살 수 있는 물건이 줄어드는 것",
+  onTap
+}: FlipCardProps) => {
   const [isFlipped, setIsFlipped] = useState(false);
 
   const handleFlip = () => {
     setIsFlipped(!isFlipped);
+    onTap?.();
   };
 
   return (

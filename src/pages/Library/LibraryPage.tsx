@@ -20,7 +20,7 @@ export default function LibraryPage() {
         <LibrarySearchBar />
         <LibraryCategoryFilter />
 
-        <div className="mt-6 flex flex-col gap-4">
+        <div className="mt-6 flex flex-col gap-4 pb-6">
           {filteredWordList.length === 0 ? (
             <LibraryEmptyState />
           ) : (

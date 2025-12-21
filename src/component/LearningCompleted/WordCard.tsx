@@ -1,4 +1,3 @@
-import { Children, ReactNode } from "react"
 import { cn } from "../../utils/cn"
 
 interface WordCardProps {

@@ -1,6 +1,6 @@
 import { createBrowserRouter, Navigate, RouteObject, RouterProvider } from 'react-router-dom';
 import './App.css'
-import RootLayout from './layout/RootLayout;';
+import RootLayout from './layout/RootLayout';
 import NotFound from './pages/NotFound';
 import ProtectedLayout from './layout/ProtectedLayout';
 import LoginPage from './pages/LoginPage';
@@ -14,7 +14,8 @@ import ReviewCardPage from './pages/ReviewCardPage';
 import HomePage from './pages/Home/HomePage';
 import TodayLearnPage from './pages/TodayLearnPage';
 import LibraryPage from './pages/Library/LibraryPage';
-import ReviewCompletedPage from './pages/reviewCompletedPage';
+import ReviewCompletedPage from './pages/ReviewCompletedPage';
+import OAuthCallbackPage from './pages/OAuthCallbackPage';
 
 const publicRoutes: RouteObject[] = [
   {
@@ -29,6 +30,10 @@ const publicRoutes: RouteObject[] = [
       {
         path: 'login',
         element: <LoginPage />,
+      },
+      {
+        path: 'auth/callback',
+        element: <OAuthCallbackPage />,
       },
     ],
   },

@@ -1,4 +1,3 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MOCK_QUESTIONS } from '../constants/mockQuiz';
 import { Timer } from 'lucide-react';

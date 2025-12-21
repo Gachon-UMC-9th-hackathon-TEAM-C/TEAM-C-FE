@@ -2,7 +2,6 @@ import PrizeIcon from "../assets/PrizeIcon.svg"
 import STARICON from "../assets/STARICON.svg"
 import ROTATEARROW from "../assets/ROTATEARROW.svg"
 import WordCard from "../component/LearningCompleted/WordCard"
-import Button from "../component/common/Button"
 import { useNavigate } from "react-router-dom"
 
 const LearningCompletedPage = () => {
@@ -51,8 +50,8 @@ const LearningCompletedPage = () => {
                         <span className="text-medium-18 text-gray-9">새로 익힌 용어</span>
                     </div>
                     <div className="flex w-full justify-start items-center gap-2">
-                        {words.map((word, idx) => (
-                            <WordCard content={word} />
+                        {words.map((word) => (
+                            <WordCard key={word} content={word} />
                         ))}
                     </div>
                 </div>
@@ -63,8 +62,8 @@ const LearningCompletedPage = () => {
                         <span className="text-medium-15 text-secondary">2개 용어를 복습하면 더 확실히 익힐 수 있어요!</span>
                     </div>
                     <div className="flex w-full justify-start items-center gap-2">
-                        {review.map((word, idx) => (
-                            <WordCard WordCardClassName="bg-secondary-4" content={word} />
+                        {review.map((word) => (
+                            <WordCard key={word} WordCardClassName="bg-secondary-4" content={word} />
                         ))}
                     </div>
                 </div>

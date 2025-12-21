@@ -25,14 +25,14 @@ const StatCard: React.FC<StatCardProps> = ({ label, value, iconSrc, tone = "blue
       : "bg-indigo-100 text-indigo-500";
 
   return (
-    <div className="bg-white rounded-2xl pt-2 pb-4 px-4 flex flex-col justify-between h-24 shadow-sm">
-      <span className="text-medium-15 text-[13px] text-primary-6">{label}</span>
+    <div className="bg-white rounded-2xl pt-2 pb-4 px-4 flex flex-col justify-between h-24 shadow-xs shadow-blue-100">
+      <span className="text-medium-15 text-primary-6">{label}</span>
 
       <div className="flex items-center justify-end gap-2">
         <div className={`w-8 h-8 rounded-full flex items-center justify-center ${toneClass}`}>
           <img src={iconSrc} alt={label} />
         </div>
-        <span className="text-semibold-24 font-bold text-gray-1">{value}</span>
+        <span className="text-semibold-28 text-gray-1">{value}</span>
       </div>
     </div>
   );
@@ -48,7 +48,7 @@ const MyState: React.FC<StatsProps> = ({ streak, level, terms, xp }) => {
 
   return (
     <section>
-      <h3 className="text-medium-15 text-gray-1 font-semibold mb-3 ml-1">나의 통계</h3>
+      <h3 className="text-semibold-20 text-gray-1 font-semibold mb-3 ml-1">나의 통계</h3>
       <div className="grid grid-cols-2 gap-3">
         {cards.map((c) => (
           <StatCard key={c.label} {...c} />

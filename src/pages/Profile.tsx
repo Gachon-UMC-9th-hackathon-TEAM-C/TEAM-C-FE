@@ -26,14 +26,14 @@ const Profile = () => {
     <div className="flex flex-col w-full min-h bg-gray-8 items-center pb-10">
 
       {/* 1. 상단 타이틀 */}
-      <header className="w-full max-w-xl px-6 pt-8 pb-4">
-        <h1 className="text-semibold-20 font-bold text-gray-1">라이브러리</h1>
+      <header className="w-full max-w-2xl px-6 pt-[100px] pb-[32px]">
+        <h1 className="text-bold-28 text-gray-1">프로필</h1>
       </header>
 
-      <main className="w-full max-w-xl px-5 flex flex-col gap-6">
+      <main className="w-full max-w-2xl px-5 flex flex-col gap-6">
 
         {/* 2. 프로필 메인 카드 */}
-        <div className="w-full rounded-[32px] p-6 shadow-xl text-white relative overflow-hidden">
+        <div className="w-full p-10 rounded-[32px] p-6 text-white relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-primary-6)] opacity-100 z-0"></div>
 
           <div className="relative z-10 flex flex-col gap-6">
@@ -43,9 +43,9 @@ const Profile = () => {
                 <img src={profileLogo} />
               </div>
               <div>
-                <h2 className="text-semibold-20">경제학습자</h2>
-                <div className="flex items-center text-primary-2 text-medium-15">
-                    <img src={crownLogo} className="flex w-4 h-4 mr-2" />
+                <h2 className="text-semibold-24 text-gray-9">경제학습자</h2>
+                <div className="flex items-center text-primary-3 text-medium-18">
+                    <img src={crownLogo} className="flex w-5 h-5 mr-2" />
                     <p className="">
                         Lv.{userStats.level}
                     </p>
@@ -60,7 +60,7 @@ const Profile = () => {
               <div className="w-full bg-primary-4 h-2.5 rounded-full overflow-hidden">
                 <div className="bg-primary-5 h-full rounded-full w-[20%]"></div>
               </div>
-              <p className="text-medium-15 text-[12px] text-primary-4 ml-1">다음 레벨까지 150 XP</p>
+              <p className="text-medium-15 text-primary-4 ml-1">다음 레벨까지 150 XP</p>
             </div>
           </div>
         </div>
@@ -78,18 +78,18 @@ const Profile = () => {
 
         {/* 5. 북마크한 용어 */}
         <section>
-          <div className="bg-white rounded-3xl px-6 py-5 shadow-sm flex justify-between">
+          <div className="bg-white rounded-3xl px-6 py-5 shadow-xs shadow-blue-100 flex justify-between">
             {/* 왼쪽: 제목만 */}
-            <span className="text-medium-15 font-semibold text-gray-1 mb-5">
+            <span className="text-medium-18 text-gray-1 mb-5">
             북마크한 용어
             </span>
 
             {/* 오른쪽: 아이콘 원 + 개수 */}
             <div className="flex items-center gap-3 mt-10">
-                <div className="w-9 h-9 rounded-full bg-blue-100 flex items-center justify-center">
+                <div className="w-9 h-9 rounded-full bg-primary-4 flex items-center justify-center">
                     <img src={bookmarkLogo} />
                 </div>
-                <span className="text-semibold-24 text-gray-1">2개</span>
+                <span className="text-semibold-28 text-gray-1">2개</span>
             </div>
         </div>
         </section>
@@ -100,7 +100,7 @@ const Profile = () => {
           {settings.map((item, index) => (
             <button
               key={index}
-              className="w-full bg-white rounded-2xl p-4 shadow-sm text-left text-medium-15 text-gray-1 hover:bg-gray-50 transition-colors"
+              className="w-full bg-white rounded-2xl p-4 shadow-xs shadow-blue-100 text-left text-medium-18 text-gray-1 hover:bg-gray-50 transition-colors"
             >
               {item}
             </button>

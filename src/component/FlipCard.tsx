@@ -38,11 +38,11 @@ const FlipCard = ({
 
           {/* 내용 */}
           <div className="relative z-10 flex h-full flex-col items-center justify-center text-white gap-1">
-            <span className="inline-block rounded-full bg-primary-3 px-5 py-1 text-medium-15 backdrop-blur-sm">
+            <span className="inline-block rounded-full text-gray-9 bg-primary-3 px-5 py-1 text-medium-15 backdrop-blur-sm">
               {tag}
             </span>
 
-            <div className="mt-4 text-semibold-20 tracking-tight">
+            <div className="mt-4 text-gray-9 text-semibold-20 tracking-tight">
               {title}
             </div>
 
@@ -50,7 +50,7 @@ const FlipCard = ({
               <img src={rotateArrow}/>
             </div>
 
-            <div className="mt-2 text-medium-15 text-primary-5">
+            <div className="mt-2 text-medium-15 text-gray-9">
               탭하여 뒤집기
             </div>
           </div>
@@ -61,12 +61,12 @@ const FlipCard = ({
           className="absolute inset-0 h-full w-full rounded-[34px] bg-white shadow-[20px_20px_40px_-15px] shadow-blue-200 [backface-visibility:hidden] [transform:rotateY(180deg)] flex flex-col items-center justify-center px-8 text-center"
         >
           {/* 태그 (연한 파란색) */}
-          <span className="inline-block rounded-full bg-primary-3 px-5 py-1 text-medium-15 text-white backdrop-blur-sm">
+          <span className="inline-block rounded-full text-gray-9 bg-primary-3 px-5 py-1 text-medium-15 text-white backdrop-blur-sm">
             {tag}
           </span>
 
           {/* 제목 */}
-          <div className="mt-4 text-semibold-20 tracking-tight">
+          <div className="mt-4 text-semibold-20 text-gray-1 tracking-tight">
             {title}
           </div>
 
@@ -77,7 +77,7 @@ const FlipCard = ({
 
           {/* 예시 박스 (사진처럼 파란 테두리 박스) */}
           <div className="w-full rounded-xl bg-primary-5 border border-primary-3 py-4 px-4">
-            <p className="text-primary-2 text-medium-15 break-keep leading-relaxed">
+            <p className="text-primary text-medium-15 break-keep leading-relaxed">
               {example}
             </p>
           </div>

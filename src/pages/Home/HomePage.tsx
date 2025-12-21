@@ -7,7 +7,7 @@ import cardIcon from "../../assets/icons/card.png";
 const HomePage = () => {
   return (
     <div className="w-full min-h-screen bg-[#F3F6FB] flex justify-center">
-      <div className="w-full max-w-[570px] pt-12 px-6 mx-auto mt-15">
+      <div className="w-full max-w-[570px] pt-[100px] px-6 mx-auto mt-15">
 
         {/* 헤더 */}
         <UserHeader />

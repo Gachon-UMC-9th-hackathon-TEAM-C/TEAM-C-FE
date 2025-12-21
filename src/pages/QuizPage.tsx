@@ -47,26 +47,27 @@ const QuizPage=()=>{
                     return (
                         <li    
                             key={idx}
-                            className={` flex items-center gap-4 p-4 rounded-2xl border-3 hover:border-primary border-primary
+                            className={` flex items-center gap-4 p-4 rounded-2xl border-3 border-primary
                                 transition-all cursor-pointer shadow-md group
                                 ${isSelected
                                     ?(isAnswered
                                         ?(isRight ?  'border-lime-500 bg-lime-50' : 'border-red-500 bg-red-50' )
-                                        : 'border-primary bg-primary-5')
+                                        : 'border-primary bg-primary-5 hover:border-primary')
                                 : 'border-gray-7 bg-gray-9'}`}
                             onClick={() => handleSelect(idx)}
                         >
                             {/* --- 내부 동그라미(외곽선) --- group-hover:border-blue-500 border-4*/}
-                            <div className={`w-5 h-5 rounded-full flex items-center justify-center
-                                ${isSelected?'':'border-gray-7 border-4'}
-                                group-hover:border-blue-500 border-1}`}>
+                            <div className={`w-5 h-5 rounded-full flex items-center justify-center 
+                                ${!isSelected?' border-gray-7 border-4':''}
+                                ${!isSelected && !isAnswered? 'group-hover:border-blue-500 border-5':''}
+                                }`}>
                                 {isSelected && (<img 
                                     src={isAnswered
                                                 ? (isRight ? RightIconPng : WrongIconPng) // 1. 제출 후 정답/오답 아이콘
                                                     : SelectIconPng                     // 2. 제출 전 클릭된 상태 아이콘
                                     }
                                     alt="icon"
-                                    className={`w-full h-full object-contain}`}
+                                    className={`w-full h-full object-contain `}
                                 />)}
                             </div>
                             

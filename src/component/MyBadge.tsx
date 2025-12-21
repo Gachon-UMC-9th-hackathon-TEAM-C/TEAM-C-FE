@@ -26,7 +26,7 @@ const badgeIconMap: Record<Badge["type"], string> = {
 const MyBadge: React.FC<MyBadgeProps> = ({ badges }) => {
   return (
     <section>
-      <h3 className="text-medium-15 text-gray-1 font-semibold mb-3 ml-1">
+      <h3 className="text-semibold-20 text-gray-1 mb-3 ml-1">
         획득한 배지
       </h3>
 
@@ -37,7 +37,7 @@ const MyBadge: React.FC<MyBadgeProps> = ({ badges }) => {
           return (
             <div
               key={badge.id}
-              className={`flex items-center justify-center w-full items-center gap-2 py-5 px-2 rounded-xl min-w-fit shadow-sm border
+              className={`flex items-center justify-center w-full items-center gap-2 py-6 px-4 rounded-xl min-w-fit shadow-xs shadow-blue-100 border
                 ${
                   badge.active
                     ? "bg-amber-50 border-amber-100"
@@ -57,8 +57,8 @@ const MyBadge: React.FC<MyBadgeProps> = ({ badges }) => {
               </div>
 
               <span
-                className={`text-semibold-20 text-[12px] ${
-                  badge.active ? "text-gray-1" : "text-gray-500"
+                className={`text-medium-15 ${
+                  badge.active ? "text-gray-1" : "text-gray-1"
                 }`}
               >
                 {badge.name}

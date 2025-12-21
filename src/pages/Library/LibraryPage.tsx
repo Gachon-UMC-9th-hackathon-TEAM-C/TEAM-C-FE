@@ -10,8 +10,12 @@ export default function LibraryPage() {
   return (
     <div className="min-h-screen w-full flex justify-center bg-[#F2F4F6]">
 
-      <div className="w-full max-w-2xl px-6 py-12">
-        <h1 className="text-2xl font-bold mb-6">라이브러리</h1>
+      <div className="w-full max-w-2xl px-6 pt-25 pb-12">
+
+        <h1 className="text-[28px] font-bold leading-[100%] text-[#1B1D1F] mb-8">
+          라이브러리
+        </h1>
+
 
         <LibrarySearchBar />
         <LibraryCategoryFilter />

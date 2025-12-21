@@ -26,7 +26,7 @@ const TodayLearningCard = () => {
     >
       {/* 상단 */}
       <div className="flex justify-between items-start">
-       <p className="text-white text-sm font-medium opacity-60">
+       <p className="text-[#9FC6FD] text-[18px] font-medium ">
           오늘의 학습
        </p>
 

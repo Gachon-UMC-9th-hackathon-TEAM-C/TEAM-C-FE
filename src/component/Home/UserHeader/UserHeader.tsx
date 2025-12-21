@@ -1,13 +1,14 @@
-import { useUserStore } from "../../../store/useUserStore";
 import crownIcon from "../../../assets/icons/crown.png";
 
-const UserHeader = () => {
-  const { level } = useUserStore();
+interface UserHeaderProps {
+  level: number;
+}
 
+const UserHeader = ({ level }: UserHeaderProps) => {
   return (
     <div className="mb-6">
       {/* 상단 제목 */}
-      <p className="text-[#1B1D1F] text-[18px] font-medium mb-2">
+      <p className="text-[#1B1D1F] text-[28px] font-bold mb-[28px] ">
         나의 이콘플립
       </p>
 
@@ -19,7 +20,7 @@ const UserHeader = () => {
           className="w-7 h-7 object-contain"
         />
 
-        <p className="text-[#1B1D1F] text-[22px] font-bold">
+        <p className="text-[#1B1D1F] text-[32px] font-bold">
           Lv.{level}
         </p>
       </div>

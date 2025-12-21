@@ -27,3 +27,4 @@ export const useUserStore = create<UserState>((set, get) => ({
       progress: Math.min(state.progress + 20, 100),
     })),
 }));
+

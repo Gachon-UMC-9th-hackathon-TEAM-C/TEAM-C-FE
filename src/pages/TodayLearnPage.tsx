@@ -1,18 +1,46 @@
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { MOCK_QUESTIONS } from '../constants/mockQuiz';
 import { Timer } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { QuizQuestion, StudyCard } from '../types/dto/card';
+import { postStartTodayStudySet } from '../services/cardService';
 
 
 const TodayLearnPage = () => {
   const navigate = useNavigate();
-  const totalSteps = MOCK_QUESTIONS.length;
+  const [ totalSteps, setTotalSteps ] = useState(5);
+  const { selectedCategoryArray } = useLocation().state as { selectedCategoryArray: string[] };
+  const [ cards, setCards ] = useState<StudyCard[]>([]);
+  const [ quizzes, setQuizzes ] = useState<QuizQuestion[]>([]);
+  
+  //console.log("selectedCategoryArray", selectedCategoryArray);
+
+  useEffect(() => {
+    const fetchCards = async () => {
+      const response = await postStartTodayStudySet({ selectedCategories: selectedCategoryArray });
+      setCards(response.result.cards);
+      setQuizzes(response.result.quizzes);
+      setTotalSteps(response.result.cards.length);
+    };
+    fetchCards();
+  }, []);
 
   const handleStart = () => {
-    navigate('/cardlearning'); // 퀴즈 페이지로 이동
+    navigate('/cardlearning', { state: { cards,quizzes, totalSteps } }); // 퀴즈 페이지로 이동
   };
 
+  const categoryMap = {
+    "INTEREST_RATE": "금리",
+    "INFLATION": "물가",
+    "INVESTMENT": "투자",
+    "FISCAL": "재정",
+  };
+
+  console.log("cards", cards);
+  console.log("quizzes", quizzes);
+
   return (
-    <div className="min-h-screen w-full bg-gray-7 flex flex-col items-center py-16">
+    <div className="min-h-screen h-fit w-full bg-gray-7 flex flex-col items-center py-16">
       {/* 상단 타이틀 섹션 */}
       <header className="w-full max-w-xl mb-10">
         <h1 className="text-gray-1 text-semibold-24 mb-2">오늘 배울 내용</h1>
@@ -23,9 +51,9 @@ const TodayLearnPage = () => {
 
       {/* 학습 단계 리스트 */}
       <main className="w-full max-w-xl flex flex-col gap-4 mb-12">
-        {MOCK_QUESTIONS.map((item, index) => (
+        {cards.map((item, index) => (
           <div 
-            key={item.id}
+            key={item.cardId}
             className="w-full bg-gray-9 rounded-[24px] p-5 
             flex items-center justify-between shadow-[0_10px_40px_rgba(59,130,246,0.1)]"
           >
@@ -36,9 +64,9 @@ const TodayLearnPage = () => {
               </div>
               
               <div className="flex flex-col gap-1">
-                <span className="text-gray-2 text-meduim-18">단어</span>
+                <span className="text-gray-2 text-meduim-18">{item.term}</span>
                 <div className="inline-block bg-primary-5 text-primary text-medium-15 px-3 py-0.5 rounded-full w-fit">
-                  주제
+                  {categoryMap[item.category as keyof typeof categoryMap]}
                 </div>
               </div>
             </div>

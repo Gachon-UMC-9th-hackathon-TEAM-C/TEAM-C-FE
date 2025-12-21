@@ -80,7 +80,7 @@ const Review = () => {
     );
   }
 
-  const reviewTerms = [ {id:1, category: "금리", title: "샌디"}]
+  const reviewTerms = [ {id:1, category: "금리", title: "명목금리"}, {id:2, category: "금리", title: "시장금리"}]
 
   return (
     <div className="flex flex-col w-full items-center justify-center min-h-screen bg-gray-8 px-4 pb-4 pt-[100px]">
@@ -142,7 +142,7 @@ const Review = () => {
             <span className="material-icons-outlined text-base">
                 <img src={time} className="w-4 h-4"/>
             </span>
-            <p>예상 소요시간: 약 {reviewData.estimatedDurationMinutes}분</p>
+            <p>예상 소요시간: 약 {3}분</p>
           </div>
         </div>
 

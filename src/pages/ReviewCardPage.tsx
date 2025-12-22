@@ -13,6 +13,11 @@ const ReviewCardPage = () => {
   const total = reviewTerms.length;
   const current = reviewTerms[index - 1];
   const [completedCount, setCompletedCount] = useState(0);
+  const [isFlipped, setIsFlipped] = useState(false);
+
+  const handeFilpCard = () => {
+    setIsFlipped(!isFlipped)
+  }
 
   // 0 ~ 100
   const progress = total === 0 ? 0 : Math.round((completedCount / total) * 100);
@@ -66,7 +71,8 @@ const ReviewCardPage = () => {
             title={current.title}
             description={current.description}
             example={current.example}
-            onTap={() => console.log("뒤집기!")}
+            onTap={handeFilpCard}
+            isFlipped={isFlipped}
           />
         </div>
       </main>
